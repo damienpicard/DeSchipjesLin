@@ -3,7 +3,7 @@ model structureHSSM
   extends Modelica.Icons.Example;
   extends IDEAS.Buildings.Linearisation.Interfaces.StateSpaceModelInterface(
       redeclare StateSpace ssm(
-        fileName="structureH.mat"), sim(offsetAzi=backAng));
+        fileName="ssm_structureH.mat"), sim(offsetAzi=backAng));
 
   final parameter Modelica.SIunits.Angle leftAng=63/180*Modelica.Constants.pi;
   final parameter Modelica.SIunits.Angle rightAng=243/180*Modelica.Constants.pi;

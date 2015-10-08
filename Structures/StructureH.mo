@@ -863,10 +863,10 @@ you may need to run the following script in order to create the state space mode
 <code>
 OutputCPUtime:=false;<br/>
 re=Modelica_LinearSystems2.ModelAnalysis.Linearize(\"DeSchipjesLin.Structures.StructureH\");<br/>
-writeMatrix(fileName=\"structureH.mat\",matrixName=\"A\",matrix=re.A);<br/>
-writeMatrix(fileName=\"structureH.mat\",matrixName=\"B\",matrix=re.B, append=true);<br/>
-writeMatrix(fileName=\"structureH.mat\",matrixName=\"C\",matrix=re.C, append=true);<br/>
-writeMatrix(fileName=\"structureH.mat\",matrixName=\"D\",matrix=re.D, append=true);<br/>
+writeMatrix(fileName=\"ssm_structureH.mat\",matrixName=\"A\",matrix=re.A);<br/>
+writeMatrix(fileName=\"ssm_structureH.mat\",matrixName=\"B\",matrix=re.B, append=true);<br/>
+writeMatrix(fileName=\"ssm_structureH.mat\",matrixName=\"C\",matrix=re.C, append=true);<br/>
+writeMatrix(fileName=\"ssm_structureH.mat\",matrixName=\"D\",matrix=re.D, append=true);<br/>
 OutputCPUtime:=true;</code>
 </html>", revisions="<html>
 <ul>
@@ -878,5 +878,4 @@ First implementation
 </html>"),
     experiment(StopTime=1e+006),
     __Dymola_experimentSetupOutput);
-
 end StructureH;

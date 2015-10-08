@@ -7,7 +7,7 @@ partial model partial_StateSpace "State space model with bus inputs"
   parameter Real C[:,:]= zeros(1,1) annotation(Dialog(enable=use_matrix));
   parameter Real D[:,:]= zeros(outputs,inputs) annotation(Dialog(enable=use_matrix));
 
-  parameter String fileName = "structureH.mat";
+  parameter String fileName = "ssm_structureH.mat";
   parameter Integer nEmb = 0;
   parameter Integer nQConv = 6 "Number of convective heat flow inputs";
   parameter Integer nQRad = 6 "Number of convective heat flow inputs";

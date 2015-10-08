@@ -7,6 +7,6 @@ record GevelType2 "Renovated - Geveltype 2"
       Materials.HoutVezel(d=0.018),
       Insulation.RotsWolSpanten(d=0.1),
       Materials.OSB(d=0.012),
-      Materials.GipsKartonPlaat(d=0.095)});
+      Materials.GipsKartonPlaat(d=0.0)});
 
 end GevelType2;
