@@ -1,0 +1,11 @@
+within DeSchipjesLin.Structures.Examples;
+model haarhakkerStraatHouse
+  extends Modelica.Icons.Example;
+
+  StructureH haarhakkerStraatHouse(linearise=false)
+    annotation (Placement(transformation(extent={{-12,-10},{12,14}})));
+  annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,
+            -100},{100,100}}), graphics),
+    experiment(StopTime=10000),
+    __Dymola_experimentSetupOutput);
+end haarhakkerStraatHouse;

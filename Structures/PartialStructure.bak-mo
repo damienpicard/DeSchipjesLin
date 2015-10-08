@@ -1,0 +1,794 @@
+within DeSchipjesLin.Structures;
+partial model PartialStructure "Standaard woning de schipjes"
+
+  //Extensions
+  extends IDEAS.Interfaces.BaseClasses.Structure(
+    nZones=6,
+    final AZones={woonruimteA,keukenA,wcA,slaapkamerA,badkamerA,nachthalA},
+    final VZones={woonruimte.V,keuken.V,wc.V,slaapkamer.V,badkamer.V,nachthal.V},
+
+    final nEmb=0,
+    final ATrans,
+    redeclare package Medium = IDEAS.Media.SimpleAir);
+
+  // Linearization
+
+  parameter Boolean addAngles=sim.addAngles;
+  parameter Boolean linearise=sim.linearise "Add connections for linearization";
+
+  // Orientations
+  final parameter Modelica.SIunits.Angle leftAng=63/180*Modelica.Constants.pi;
+  final parameter Modelica.SIunits.Angle rightAng=243/180*Modelica.Constants.pi;
+  final parameter Modelica.SIunits.Angle frontAng=153/180*Modelica.Constants.pi;
+  final parameter Modelica.SIunits.Angle backAng=-27/180*Modelica.Constants.pi;
+
+  parameter Modelica.SIunits.Length isolatieTest=0;
+
+  parameter Modelica.SIunits.Area woonruimteA=21.73;
+  parameter Modelica.SIunits.Area keukenA=7.32;
+  parameter Modelica.SIunits.Area wcA=1.65;
+  parameter Modelica.SIunits.Area slaapkamerA=10.79;
+  parameter Modelica.SIunits.Area badkamerA=3.61;
+  parameter Modelica.SIunits.Area nachthalA=3.23;
+
+  //----------- Zones -------------------------------------------------------
+  IDEAS.Buildings.Linearisation.Components.LinZone woonruimte(
+    V=70.1,
+    corrCV=5,
+    nSurf=10,
+    redeclare package Medium = Medium,
+    n50=6.74,
+    useFluidPorts=false)
+    annotation (Placement(transformation(extent={{28,48},{48,68}})));
+  IDEAS.Buildings.Linearisation.Components.LinZone keuken(
+    V=17.13,
+    nSurf=8,
+    redeclare package Medium = Medium,
+    n50=2.87,
+    useFluidPorts=false)
+    annotation (Placement(transformation(extent={{28,-10},{48,10}})));
+  IDEAS.Buildings.Linearisation.Components.LinZone wc(
+    V=3.86,
+    nSurf=7,
+    redeclare package Medium = Medium,
+    n50=3.36,
+    useFluidPorts=false)
+    annotation (Placement(transformation(extent={{28,-60},{48,-40}})));
+  IDEAS.Buildings.Linearisation.Components.LinZone slaapkamer(
+    V=24.17,
+    nSurf=10,
+    redeclare package Medium = Medium,
+    n50=3.25,
+    useFluidPorts=false)
+    annotation (Placement(transformation(extent={{28,-108},{48,-88}})));
+  IDEAS.Buildings.Linearisation.Components.LinZone badkamer(
+    V=8.09,
+    nSurf=7,
+    redeclare package Medium = Medium,
+    n50=3.33,
+    useFluidPorts=false)
+    annotation (Placement(transformation(extent={{30,-162},{50,-142}})));
+  IDEAS.Buildings.Linearisation.Components.LinZone nachthal(
+    V=7.24,
+    nSurf=6,
+    redeclare package Medium = Medium,
+    n50=5.14,
+    useFluidPorts=false)
+    annotation (Placement(transformation(extent={{32,-212},{52,-192}})));
+
+  //----------- Internal walls -------------------------------------------------------
+  IDEAS.Buildings.Components.InternalWall woonruimteKeuken(
+    AWall=6.97,
+    azi=leftRad,
+    final insulationThickness=0,
+    redeclare final Data.Constructions.Old.BinnenMuur constructionType,
+    inc=1.5707963267949) annotation (Placement(transformation(
+        extent={{-5,10},{5,-10}},
+        rotation=180,
+        origin={19,40})));
+  IDEAS.Buildings.Components.InternalWall woonruimteHal(
+    AWall=3.32,
+    inc=0,
+    azi=0,
+    final insulationThickness=0,
+    redeclare final Data.Constructions.Old.BinnenMuur constructionType)
+    annotation (Placement(transformation(
+        extent={{5,-10},{-5,10}},
+        rotation=270,
+        origin={-61,42})));
+  IDEAS.Buildings.Components.InternalWall woonruimteBad(
+    AWall=3.61,
+    inc=0,
+    azi=0,
+    final insulationThickness=0,
+    redeclare final Data.Constructions.Old.BinnenMuur constructionType)
+    annotation (Placement(transformation(
+        extent={{-5,10},{5,-10}},
+        rotation=90,
+        origin={-35,42})));
+  IDEAS.Buildings.Components.InternalWall woonruimteSlaapkamer(
+    AWall=10.79,
+    inc=0,
+    azi=0,
+    final insulationThickness=0,
+    redeclare final Data.Constructions.Old.BinnenMuur constructionType)
+    annotation (Placement(transformation(
+        extent={{-5,10},{5,-10}},
+        rotation=90,
+        origin={-7,42})));
+  IDEAS.Buildings.Components.InternalWall keukenWC(
+    AWall=1.96,
+    final insulationThickness=0,
+    redeclare final Data.Constructions.Old.BinnenMuur constructionType,
+    inc=1.5707963267949,
+    azi=frontRad) annotation (Placement(transformation(
+        extent={{5,-10},{-5,10}},
+        rotation=0,
+        origin={-9,-12})));
+  IDEAS.Buildings.Components.InternalWall slaapkamerBadLiggend(
+    AWall=4.26,
+    final insulationThickness=0,
+    redeclare final Data.Constructions.Old.BinnenMuur constructionType,
+    inc=1.5707963267949,
+    azi=backRad)
+    annotation (Placement(transformation(extent={{-50,-118},{-60,-98}})));
+  IDEAS.Buildings.Components.InternalWall slaapkamerBadStaand(
+    AWall=1.12,
+    final insulationThickness=0,
+    redeclare final Data.Constructions.Old.BinnenMuur constructionType,
+    inc=1.5707963267949,
+    azi=backRad)
+    annotation (Placement(transformation(extent={{-26,-118},{-36,-98}})));
+  IDEAS.Buildings.Components.InternalWall slaapkamerHal(
+    AWall=3.81,
+    final insulationThickness=0,
+    redeclare final Data.Constructions.Old.BinnenMuur constructionType,
+    inc=1.5707963267949,
+    azi=backRad)
+    annotation (Placement(transformation(extent={{-72,-118},{-82,-98}})));
+
+  IDEAS.Buildings.Components.InternalWall badkamerHal(
+    AWall=2.4,
+    final insulationThickness=0,
+    redeclare final Data.Constructions.Old.BinnenMuur constructionType,
+    inc=1.5707963267949,
+    azi=backRad)
+    annotation (Placement(transformation(extent={{-88,-174},{-98,-154}})));
+
+  //----------- Boundary walls -------------------------------------------------------
+  IDEAS.Buildings.Components.BoundaryWall woonruimteGemeenschappelijk(
+    AWall=17.10,
+    final insulationThickness=0,
+    redeclare final Data.Constructions.Old.GemeneMuur constructionType,
+    inc=1.5707963267949,
+    azi=rightRad)
+    annotation (Placement(transformation(extent={{-100,70},{-90,90}})));
+
+  IDEAS.Buildings.Components.BoundaryWall keukenGemeenschappelijk(
+    AWall=5.92,
+    final insulationThickness=0,
+    redeclare final Data.Constructions.Old.GemeneMuur constructionType,
+    inc=1.5707963267949,
+    azi=leftRad) annotation (Placement(transformation(
+        extent={{-5,-10},{5,10}},
+        rotation=0,
+        origin={-45,-12})));
+  IDEAS.Buildings.Components.BoundaryWall WCGemeenschappelijk(
+    AWall=2.85,
+    final insulationThickness=0,
+    redeclare final Data.Constructions.Old.GemeneMuur constructionType,
+    inc=1.5707963267949,
+    azi=leftRad)
+    annotation (Placement(transformation(extent={{-20,-72},{-10,-52}})));
+  IDEAS.Buildings.Components.BoundaryWall slaapkamerGemeenschappelijk(
+    AWall=10.27,
+    final insulationThickness=0,
+    redeclare final Data.Constructions.Old.GemeneMuur constructionType,
+    inc=1.5707963267949,
+    azi=rightRad)
+    annotation (Placement(transformation(extent={{-104,-118},{-94,-98}})));
+  IDEAS.Buildings.Components.BoundaryWall halGemeenschappelijk(
+    AWall=4.05,
+    final insulationThickness=0,
+    redeclare final Data.Constructions.Old.GemeneMuur constructionType,
+    inc=1.5707963267949,
+    azi=rightRad)
+    annotation (Placement(transformation(extent={{-44,-228},{-34,-208}})));
+
+  //----------- Outer walls -------------------------------------------------------
+  IDEAS.Buildings.Components.OuterWall woonruimteKoer(
+    AWall=5.15,
+    redeclare final Data.Constructions.Renovated.GevelType2 constructionType,
+    final insulationThickness=0,
+    inc=1.5707963267949,
+    azi=leftRad)
+    annotation (Placement(transformation(extent={{-150,70},{-140,90}})));
+  IDEAS.Buildings.Components.SlabOnGround woonruimteVloer(
+    PWall=18.92,
+    inc=0,
+    azi=0,
+    AWall=woonruimteA,
+    redeclare final Data.Constructions.Renovated.Vloer1 constructionType,
+    final insulationThickness=0) annotation (Placement(transformation(
+        extent={{-5,-10},{5,10}},
+        rotation=90,
+        origin={-105,40})));
+  IDEAS.Buildings.Components.OuterWall woonruimteAchtergevel(
+    AWall=13.23,
+    redeclare final Data.Constructions.Renovated.GevelType1 constructionType,
+    final insulationThickness=0,
+    inc=1.5707963267949,
+    azi=backRad)
+    annotation (Placement(transformation(extent={{-126,70},{-116,90}})));
+  IDEAS.Buildings.Components.OuterWall woonruimteVoorgevel(
+    AWall=9.29,
+    redeclare final Data.Constructions.Renovated.GevelType1 constructionType,
+    final insulationThickness=0,
+    azi=frontRad,
+    inc=1.5707963267949)
+    annotation (Placement(transformation(extent={{-170,46},{-160,66}})));
+  IDEAS.Buildings.Components.OuterWall keukenAchtergevel(
+    AWall=7.56,
+    redeclare final Data.Constructions.Renovated.GevelType1 constructionType,
+    final insulationThickness=0,
+    inc=1.5707963267949,
+    azi=backRad)
+    annotation (Placement(transformation(extent={{-172,-12},{-162,8}})));
+  IDEAS.Buildings.Components.SlabOnGround keukenVloer(
+    AWall=7.27,
+    PWall=11.16,
+    inc=0,
+    azi=0,
+    redeclare final Data.Constructions.Renovated.Vloer1 constructionType,
+    final insulationThickness=0) annotation (Placement(transformation(
+        extent={{-5,-10},{5,10}},
+        rotation=90,
+        origin={-69,-12})));
+  IDEAS.Buildings.Components.OuterWall keukenDak(
+    AWall=keukenA,
+    inc=0,
+    azi=0,
+    redeclare final Data.Constructions.Old.DakBijBouw constructionType,
+    final insulationThickness=0.08,
+    redeclare final Data.Insulation.RotsWolSKepers insulationType) annotation (
+      Placement(transformation(
+        extent={{-5,-10},{5,10}},
+        rotation=270,
+        origin={-143,14})));
+  IDEAS.Buildings.Components.OuterWall WCKoer(
+    AWall=2.83,
+    redeclare final Data.Constructions.Renovated.GevelType2 constructionType,
+    final insulationThickness=0,
+    inc=1.5707963267949,
+    azi=rightRad)
+    annotation (Placement(transformation(extent={{-170,-62},{-160,-42}})));
+  IDEAS.Buildings.Components.OuterWall WCVoorgevel(
+    AWall=2.65,
+    redeclare final Data.Constructions.Renovated.GevelType3 constructionType,
+    final insulationThickness=0,
+    inc=1.5707963267949,
+    azi=frontRad)
+    annotation (Placement(transformation(extent={{-134,-70},{-124,-50}})));
+  IDEAS.Buildings.Components.SlabOnGround WCVloer(
+    AWall=wcA,
+    inc=0,
+    azi=0,
+    PWall=4.74,
+    final insulationThickness=0,
+    redeclare final Data.Constructions.Renovated.Vloer1 constructionType)
+    annotation (Placement(transformation(
+        extent={{-5,-10},{5,10}},
+        rotation=90,
+        origin={-37,-58})));
+  IDEAS.Buildings.Components.OuterWall WCDak(
+    AWall=wcA,
+    inc=0,
+    azi=0,
+    final insulationThickness=0.08,
+    redeclare final Data.Constructions.Old.DakBijBouw constructionType,
+    redeclare final Data.Insulation.RotsWolSKepers insulationType) annotation (
+      Placement(transformation(
+        extent={{-5,-10},{5,10}},
+        rotation=270,
+        origin={-79,-32})));
+  IDEAS.Buildings.Components.OuterWall slaapkamerZijgevel(
+    AWall=2.41,
+    redeclare final Data.Constructions.Renovated.GevelType1 constructionType,
+    final insulationThickness=0,
+    inc=1.5707963267949,
+    azi=leftRad)
+    annotation (Placement(transformation(extent={{-168,-108},{-158,-88}})));
+  IDEAS.Buildings.Components.OuterWall slaapkamerVoorgevel(
+    AWall=13.22,
+    redeclare final Data.Constructions.Renovated.GevelType1 constructionType,
+    final insulationThickness=0,
+    inc=1.5707963267949,
+    azi=frontRad)
+    annotation (Placement(transformation(extent={{-128,-118},{-118,-98}})));
+
+  IDEAS.Buildings.Components.OuterWall halAchtergevel(
+    AWall=1.06,
+    redeclare final Data.Constructions.Renovated.GevelType1 constructionType,
+    final insulationThickness=0,
+    inc=1.5707963267949,
+    azi=backRad)
+    annotation (Placement(transformation(extent={{-168,-212},{-158,-192}})));
+  IDEAS.Buildings.Components.OuterWall halDak(
+    AWall=6.89,
+    final insulationThickness=0.08,
+    redeclare final Data.Constructions.Old.DakHoofdGebouw constructionType,
+    redeclare final Data.Insulation.RotsWolSpanten insulationType,
+    inc=0,
+    azi=0) annotation (Placement(transformation(
+        extent={{-5,-10},{5,10}},
+        rotation=270,
+        origin={-7,-188})));
+
+  IDEAS.Buildings.Components.OuterWall slaapkamerDakRechts(
+    AWall=14.05,
+    final insulationThickness=0.08,
+    redeclare final Data.Constructions.Old.DakHoofdGebouw constructionType,
+    redeclare final Data.Insulation.RotsWolSpanten insulationType,
+    inc=0,
+    azi=rightRad) annotation (Placement(transformation(
+        extent={{-5,-10},{5,10}},
+        rotation=270,
+        origin={-27,-82})));
+  //----------- Windows -------------------------------------------------------
+  IDEAS.Buildings.Linearisation.Components.LinWindow woonruimteWindow(
+    A=5.78,
+    frac=0.12,
+    linOut=false,
+    use_ctrl=false,
+    redeclare final Data.Glass.DubbelGlas glazing,
+    redeclare final Data.Frames.LoofHout fraType,
+    inc=1.5707963267949,
+    azi=frontRad)
+    annotation (Placement(transformation(extent={{-6,68},{4,88}})));
+  IDEAS.Buildings.Linearisation.Components.LinWindow keukenWindowLarge(
+    A=4.57,
+    frac=0.15,
+    redeclare final Data.Glass.DubbelGlas glazing,
+    redeclare final Data.Frames.LoofHout fraType,
+    use_ctrl=false,
+    inc=1.5707963267949,
+    azi=frontRad)
+    annotation (Placement(transformation(extent={{-122,-22},{-112,-2}})));
+  IDEAS.Buildings.Linearisation.Components.LinWindow keukenWindowSmall(
+    A=1.05,
+    frac=0.25,
+    redeclare final Data.Glass.DubbelGlas glazing,
+    redeclare final Data.Frames.LoofHout fraType,
+    linOut=false,
+    use_ctrl=false,
+    inc=1.5707963267949,
+    azi=frontRad)
+    annotation (Placement(transformation(extent={{-104,-22},{-94,-2}})));
+  IDEAS.Buildings.Linearisation.Components.LinWindow raamwc(
+    A=0.07,
+    frac=0.89,
+    redeclare final Data.Glass.DubbelGlas glazing,
+    redeclare final Data.Frames.LoofHout fraType,
+    use_ctrl=false,
+    inc=1.5707963267949,
+    azi=frontRad)
+    annotation (Placement(transformation(extent={{-76,-72},{-66,-52}})));
+  IDEAS.Buildings.Linearisation.Components.LinWindow slaapkamerRaam(
+    A=0.75,
+    frac=0.21,
+    redeclare final Data.Glass.DubbelGlas glazing,
+    redeclare final Data.Frames.LoofHout fraType,
+    use_ctrl=false,
+    inc=1.5707963267949,
+    azi=frontRad)
+    annotation (Placement(transformation(extent={{-18,-120},{-8,-100}})));
+  IDEAS.Buildings.Components.OuterWall slaapkamerDakLinks(
+    AWall=11.73,
+    redeclare final Data.Constructions.Old.DakHoofdGebouw constructionType,
+    final insulationThickness=0.08,
+    redeclare final Data.Insulation.RotsWolSpanten insulationType,
+    inc=0,
+    azi=leftRad) annotation (Placement(transformation(
+        extent={{-5,-10},{5,10}},
+        rotation=270,
+        origin={-53,-82})));
+  IDEAS.Buildings.Components.OuterWall backRad(
+    AWall=1.34,
+    redeclare final Data.Constructions.Renovated.GevelType1 constructionType,
+    final insulationThickness=0,
+    inc=1.5707963267949,
+    azi=3.9444441095072)
+    annotation (Placement(transformation(extent={{-168,-164},{-158,-144}})));
+  IDEAS.Buildings.Components.OuterWall badkamerZijgevel(
+    AWall=4.05,
+    redeclare final Data.Constructions.Renovated.GevelType1 constructionType,
+    final insulationThickness=0,
+    inc=1.5707963267949,
+    azi=leftRad)
+    annotation (Placement(transformation(extent={{-120,-174},{-110,-154}})));
+  IDEAS.Buildings.Components.OuterWall badkamerDak(
+    AWall=8.74,
+    final insulationThickness=0.08,
+    redeclare final Data.Constructions.Old.DakHoofdGebouw constructionType,
+    redeclare final Data.Insulation.RotsWolSpanten insulationType,
+    inc=0,
+    azi=rightRad) annotation (Placement(transformation(
+        extent={{-5,-10},{5,10}},
+        rotation=270,
+        origin={-51,-138})));
+
+equation
+  connect(woonruimteHal.propsBus_a, woonruimte.propsBus[1]) annotation (Line(
+      points={{-57,47},{-57,54},{-58,54},{-58,62},{28,62},{28,63.8}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+  connect(woonruimteBad.propsBus_a, woonruimte.propsBus[2]) annotation (Line(
+      points={{-31,47},{-31,63.4},{28,63.4}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+  connect(woonruimteSlaapkamer.propsBus_a, woonruimte.propsBus[3]) annotation (
+      Line(
+      points={{-3,47},{-3,63},{28,63}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+  connect(woonruimteKeuken.propsBus_a, woonruimte.propsBus[4]) annotation (Line(
+      points={{14,44},{14,62},{-24,62},{-24,62.6},{28,62.6}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+  connect(woonruimteGemeenschappelijk.propsBus_a, woonruimte.propsBus[5])
+    annotation (Line(
+      points={{-90,84},{-90,62.2},{28,62.2}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+  connect(woonruimteVloer.propsBus_a, woonruimte.propsBus[6]) annotation (Line(
+      points={{-109,45},{-110,45},{-110,61.8},{28,61.8}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+  connect(woonruimteAchtergevel.propsBus_a, woonruimte.propsBus[7]) annotation
+    (Line(
+      points={{-116,84},{-116,61.4},{28,61.4}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+  connect(woonruimteVoorgevel.propsBus_a, woonruimte.propsBus[8]) annotation (
+      Line(
+      points={{-160,60},{-132,60},{-132,61},{28,61}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+  connect(woonruimteKoer.propsBus_a, woonruimte.propsBus[9]) annotation (Line(
+      points={{-140,84},{-140,60.6},{28,60.6}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+  connect(woonruimteKeuken.propsBus_b, keuken.propsBus[1]) annotation (Line(
+      points={{24,44},{24,8},{28,8},{28,5.75}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+
+  connect(woonruimteSlaapkamer.propsBus_b, slaapkamer.propsBus[1]) annotation (
+      Line(
+      points={{-3,37},{-3,30},{-6,30},{-6,22},{18,22},{18,-92.2},{28,-92.2}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+
+  connect(woonruimteBad.propsBus_b, badkamer.propsBus[1]) annotation (Line(
+      points={{-31,37},{-31,18},{14,18},{14,-144},{30,-144},{30,-146.286}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+  connect(woonruimteHal.propsBus_b, nachthal.propsBus[1]) annotation (Line(
+      points={{-57,37},{-57,16},{-56,16},{-56,14},{10,14},{10,-192},{32,-192},{
+          32,-196.333}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+  connect(woonruimteWindow.propsBus_a, woonruimte.propsBus[10]) annotation (
+      Line(
+      points={{4,82},{4,60.2},{28,60.2}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+  connect(keukenWC.propsBus_a, keuken.propsBus[2]) annotation (Line(
+      points={{-14,-8},{-14,2},{28,2},{28,5.25}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+  connect(keukenWC.propsBus_b, wc.propsBus[1]) annotation (Line(
+      points={{-4,-8},{22,-8},{22,-44.2857},{28,-44.2857}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+  connect(keukenGemeenschappelijk.propsBus_a, keuken.propsBus[3]) annotation (
+      Line(
+      points={{-40,-8},{-40,4},{28,4},{28,4.75}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+  connect(keukenVloer.propsBus_a, keuken.propsBus[4]) annotation (Line(
+      points={{-73,-7},{-73,4.25},{28,4.25}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+
+  connect(keukenWindowSmall.propsBus_a, keuken.propsBus[5]) annotation (Line(
+      points={{-94,-8},{-94,3.75},{28,3.75}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+  connect(keukenWindowLarge.propsBus_a, keuken.propsBus[6]) annotation (Line(
+      points={{-112,-8},{-112,3.25},{28,3.25}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+  connect(keukenDak.propsBus_a, keuken.propsBus[7]) annotation (Line(
+      points={{-139,9},{-140,9},{-140,2.75},{28,2.75}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+  connect(keukenAchtergevel.propsBus_a, keuken.propsBus[8]) annotation (Line(
+      points={{-162,2},{-68,2},{-68,2.25},{28,2.25}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+
+  connect(WCGemeenschappelijk.propsBus_a, wc.propsBus[2]) annotation (Line(
+      points={{-10,-58},{-6,-58},{-6,-48},{28,-48},{28,-44.8571}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+  connect(WCVloer.propsBus_a, wc.propsBus[3]) annotation (Line(
+      points={{-41,-53},{-40,-53},{-40,-48},{28,-48},{28,-45.4286}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+  connect(raamwc.propsBus_a, wc.propsBus[4]) annotation (Line(
+      points={{-66,-58},{-66,-48},{26,-48},{26,-46},{28,-46}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+  connect(WCDak.propsBus_a, wc.propsBus[5]) annotation (Line(
+      points={{-75,-37},{-75,-48},{28,-48},{28,-46.5714}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+  connect(WCVoorgevel.propsBus_a, wc.propsBus[6]) annotation (Line(
+      points={{-124,-56},{-90,-56},{-90,-48},{28,-48},{28,-47.1429}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+  connect(WCKoer.propsBus_a, wc.propsBus[7]) annotation (Line(
+      points={{-160,-48},{-86,-48},{-86,-47.7143},{28,-47.7143}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+  connect(slaapkamerDakLinks.propsBus_a, slaapkamer.propsBus[2]) annotation (
+      Line(
+      points={{-49,-87},{-49,-90},{-48,-90},{-48,-94},{28,-94},{28,-92.6}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+  connect(slaapkamerRaam.propsBus_a, slaapkamer.propsBus[3]) annotation (Line(
+      points={{-8,-106},{-8,-94},{12,-94},{12,-93},{28,-93}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+  connect(slaapkamerHal.propsBus_a, slaapkamer.propsBus[4]) annotation (Line(
+      points={{-82,-104},{-82,-93.4},{28,-93.4}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+  connect(slaapkamerBadStaand.propsBus_a, slaapkamer.propsBus[5]) annotation (
+      Line(
+      points={{-36,-104},{-36,-94},{-28,-94},{-28,-93.8},{28,-93.8}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+  connect(slaapkamerBadLiggend.propsBus_a, slaapkamer.propsBus[6]) annotation (
+      Line(
+      points={{-60,-104},{-60,-94.2},{28,-94.2}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+  connect(slaapkamerGemeenschappelijk.propsBus_a, slaapkamer.propsBus[7])
+    annotation (Line(
+      points={{-94,-104},{-94,-94.6},{28,-94.6}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+  connect(slaapkamerVoorgevel.propsBus_a, slaapkamer.propsBus[8]) annotation (
+      Line(
+      points={{-118,-104},{-118,-94},{28,-94},{28,-95}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+  connect(slaapkamerZijgevel.propsBus_a, slaapkamer.propsBus[9]) annotation (
+      Line(
+      points={{-158,-94},{28,-94},{28,-95.4}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+  connect(slaapkamerBadStaand.propsBus_b, badkamer.propsBus[2]) annotation (
+      Line(
+      points={{-26,-104},{-24,-104},{-24,-124},{14,-124},{14,-144},{30,-144},{
+          30,-146.857}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+  connect(slaapkamerBadLiggend.propsBus_b, badkamer.propsBus[3]) annotation (
+      Line(
+      points={{-50,-104},{-50,-124},{14,-124},{14,-144},{30,-144},{30,-147.429}},
+
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+  connect(badkamerHal.propsBus_a, badkamer.propsBus[4]) annotation (Line(
+      points={{-98,-160},{-98,-148},{30,-148}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+  connect(badkamerDak.propsBus_a, badkamer.propsBus[5]) annotation (Line(
+      points={{-47,-143},{-47,-148.571},{30,-148.571}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+  connect(badkamerZijgevel.propsBus_a, badkamer.propsBus[6]) annotation (Line(
+      points={{-110,-160},{-110,-149.143},{30,-149.143}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+  connect(backRad.propsBus_a, badkamer.propsBus[7]) annotation (Line(
+      points={{-158,-150},{-126,-150},{-126,-149.714},{30,-149.714}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+  connect(badkamerHal.propsBus_b, nachthal.propsBus[3]) annotation (Line(
+      points={{-88,-160},{-88,-178},{10,-178},{10,-192},{32,-192},{32,-197.667}},
+
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+  connect(slaapkamerHal.propsBus_b, nachthal.propsBus[2]) annotation (Line(
+      points={{-72,-104},{-72,-128},{10,-128},{10,-192},{32,-192},{32,-197}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+  connect(halGemeenschappelijk.propsBus_a, nachthal.propsBus[4]) annotation (
+      Line(
+      points={{-34,-214},{-32,-214},{-32,-198.333},{32,-198.333}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+  connect(halDak.propsBus_a, nachthal.propsBus[5]) annotation (Line(
+      points={{-3,-193},{-3,-199},{32,-199}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+  connect(halAchtergevel.propsBus_a, nachthal.propsBus[6]) annotation (Line(
+      points={{-158,-198},{32,-198},{32,-199.667}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+  connect(slaapkamerDakRechts.propsBus_a, slaapkamer.propsBus[10]) annotation (
+      Line(
+      points={{-23,-87},{-23,-90},{-24,-90},{-24,-94},{28,-94},{28,-95.8}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+
+  // Linerization connections
+  connect(woonruimte.TSensor, TSensor[1]) annotation (Line(points={{48.6,58},{
+          82,58},{82,-68.3333},{156,-68.3333}}, color={0,0,127}));
+  connect(woonruimte.gainCon, heatPortCon[1]) annotation (Line(points={{48,55},
+          {72,55},{72,56},{92,56},{92,11.6667},{150,11.6667}}, color={191,0,0}));
+  connect(woonruimte.gainRad, heatPortRad[1]) annotation (Line(points={{48,52},
+          {88,52},{88,-28.3333},{150,-28.3333}}, color={191,0,0}));
+  connect(keuken.TSensor, TSensor[2]) annotation (Line(points={{48.6,0},{82,0},
+          {82,-65},{156,-65}}, color={0,0,127}));
+  connect(keuken.gainCon, heatPortCon[2]) annotation (Line(points={{48,-3},{68,
+          -3},{68,-4},{92,-4},{92,15},{150,15}}, color={191,0,0}));
+  connect(keuken.gainRad, heatPortRad[2]) annotation (Line(points={{48,-6},{68,
+          -6},{88,-6},{88,-25},{150,-25}}, color={191,0,0}));
+  connect(wc.gainCon, heatPortCon[3]) annotation (Line(points={{48,-53},{72,-53},
+          {72,-52},{92,-52},{92,18.3333},{150,18.3333}}, color={191,0,0}));
+  connect(wc.TSensor, TSensor[3]) annotation (Line(points={{48.6,-50},{82,-50},
+          {82,-61.6667},{156,-61.6667}}, color={0,0,127}));
+  connect(wc.gainRad, heatPortRad[3]) annotation (Line(points={{48,-56},{70,-56},
+          {88,-56},{88,-21.6667},{150,-21.6667}}, color={191,0,0}));
+  connect(slaapkamer.TSensor, TSensor[4]) annotation (Line(points={{48.6,-98},{
+          82,-98},{82,-58.3333},{156,-58.3333}}, color={0,0,127}));
+  connect(slaapkamer.gainCon, heatPortCon[4]) annotation (Line(points={{48,-101},
+          {70,-101},{70,-100},{88,-100},{88,21.6667},{150,21.6667}}, color={191,
+          0,0}));
+  connect(slaapkamer.gainRad, heatPortRad[4]) annotation (Line(points={{48,-104},
+          {70,-104},{88,-104},{88,-18.3333},{150,-18.3333}}, color={191,0,0}));
+  connect(badkamer.TSensor, TSensor[5]) annotation (Line(points={{50.6,-152},{
+          82,-152},{82,-55},{156,-55}}, color={0,0,127}));
+  connect(badkamer.gainCon, heatPortCon[5]) annotation (Line(points={{50,-155},
+          {88,-155},{88,25},{150,25}}, color={191,0,0}));
+  connect(badkamer.gainRad, heatPortRad[5]) annotation (Line(points={{50,-158},
+          {92,-158},{92,-15},{150,-15}}, color={191,0,0}));
+  connect(nachthal.TSensor, TSensor[6]) annotation (Line(points={{52.6,-202},{
+          82,-202},{82,-51.6667},{156,-51.6667}}, color={0,0,127}));
+  connect(nachthal.gainCon, heatPortCon[6]) annotation (Line(points={{52,-205},
+          {68,-205},{68,-206},{88,-206},{88,28},{110,28},{110,28.3333},{150,
+          28.3333}}, color={191,0,0}));
+  connect(nachthal.gainRad, heatPortRad[6]) annotation (Line(points={{52,-208},
+          {76,-208},{92,-208},{92,-11.6667},{150,-11.6667}}, color={191,0,0}));
+  annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-200,
+            -240},{140,100}}), graphics={
+        Rectangle(
+          extent={{-178,92},{68,28}},
+          lineColor={0,0,0},
+          lineThickness=0.5),
+        Rectangle(
+          extent={{-178,28},{68,-24}},
+          lineColor={0,0,0},
+          lineThickness=0.5),
+        Rectangle(
+          extent={{-178,-24},{68,-76}},
+          lineColor={0,0,0},
+          lineThickness=0.5),
+        Rectangle(
+          extent={{-178,-76},{68,-130}},
+          lineColor={0,0,0},
+          lineThickness=0.5),
+        Rectangle(
+          extent={{-178,-130},{68,-180}},
+          lineColor={0,0,0},
+          lineThickness=0.5),
+        Rectangle(
+          extent={{-178,-180},{68,-232}},
+          lineColor={0,0,0},
+          lineThickness=0.5),
+        Text(
+          extent={{-184,38},{-110,28}},
+          lineColor={0,0,0},
+          lineThickness=0.5,
+          fillColor={0,0,255},
+          fillPattern=FillPattern.Solid,
+          textString="1: woonteruimte"),
+        Text(
+          extent={{-194,-14},{-120,-24}},
+          lineColor={0,0,0},
+          lineThickness=0.5,
+          fillColor={0,0,255},
+          fillPattern=FillPattern.Solid,
+          textString="2: keuken"),
+        Text(
+          extent={{-202,-64},{-128,-74}},
+          lineColor={0,0,0},
+          lineThickness=0.5,
+          fillColor={0,0,255},
+          fillPattern=FillPattern.Solid,
+          textString="3: wc"),
+        Text(
+          extent={{-186,-116},{-112,-126}},
+          lineColor={0,0,0},
+          lineThickness=0.5,
+          fillColor={0,0,255},
+          fillPattern=FillPattern.Solid,
+          textString="4: slaapkamer"),
+        Text(
+          extent={{-188,-168},{-114,-178}},
+          lineColor={0,0,0},
+          lineThickness=0.5,
+          fillColor={0,0,255},
+          fillPattern=FillPattern.Solid,
+          textString="5: badkamer"),
+        Text(
+          extent={{-188,-220},{-114,-230}},
+          lineColor={0,0,0},
+          lineThickness=0.5,
+          fillColor={0,0,255},
+          fillPattern=FillPattern.Solid,
+          textString="6: nachthal")}));
+end PartialStructure;
