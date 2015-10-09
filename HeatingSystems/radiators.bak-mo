@@ -1,37 +1,44 @@
 within DeSchipjesLin.HeatingSystems;
-model PrescribedHeat_pid
+model radiators
 
   parameter Integer nZones=6;
+  parameter Modelica.SIunits.Power powerZones[nZones] = 40.*{70,17.13,3.86,25,8,7.24} .*{0.6,1,1,1,1,0.8};
 
   Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_b portRad[nZones]
     annotation (Placement(transformation(extent={{-110,-10},{-90,10}})));
   Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_b portCon[nZones]
     annotation (Placement(transformation(extent={{-110,50},{-90,70}})));
-  Modelica.Thermal.HeatTransfer.Sources.PrescribedHeatFlow preHeatFlowCon[
-    nZones] annotation (Placement(transformation(extent={{-40,50},{-60,70}})));
-  Modelica.Thermal.HeatTransfer.Sources.PrescribedHeatFlow preHeatFlowRad[
-    nZones] annotation (Placement(transformation(extent={{-40,-10},{-60,10}})));
-  Modelica.Blocks.Math.Gain gainRad[nZones](k=0.4)
-    annotation (Placement(transformation(extent={{-14,-6},{-26,6}})));
-  Modelica.Blocks.Math.Gain gainCon[nZones](k=0.6)
-    annotation (Placement(transformation(extent={{-16,54},{-28,66}})));
-  Modelica.Blocks.Interfaces.RealInput QFlow[nZones] "Heat flow to zones"
-    annotation (Placement(transformation(extent={{128,10},{88,50}})));
+  Modelica.Blocks.Interfaces.RealInput TZones[nZones](unit="K", displayUnit="degC")
+    annotation (Placement(transformation(extent={{-130,-80},{-90,-40}})));
+  Modelica.Thermal.HeatTransfer.Sources.PrescribedTemperature
+                                                           preHeatFlowCon[
+    nZones] annotation (Placement(transformation(extent={{20,50},{0,70}})));
+  Modelica.Thermal.HeatTransfer.Sources.PrescribedTemperature
+                                                           preHeatFlowRad[
+    nZones] annotation (Placement(transformation(extent={{20,-10},{0,10}})));
+  Modelica.Blocks.Interfaces.RealInput TSet annotation (Placement(
+        transformation(
+        extent={{-20,-20},{20,20}},
+        rotation=90,
+        origin={0,-110})));
+  Modelica.Thermal.HeatTransfer.Components.HeatCapacitor heatCapacitor
+    annotation (Placement(transformation(extent={{-62,-40},{-42,-20}})));
+  Modelica.Thermal.HeatTransfer.Components.ThermalResistor RCon[nZones](R=R ./
+        2) annotation (Placement(transformation(extent={{-86,50},{-66,70}})));
+  Modelica.Thermal.HeatTransfer.Components.ThermalResistor RRad[nZones](R=R ./
+        2) annotation (Placement(transformation(extent={{-82,-10},{-62,10}})));
+  Modelica.Thermal.HeatTransfer.Components.ThermalResistor RCon1[nZones](R=R
+         ./ 2)
+    annotation (Placement(transformation(extent={{-50,50},{-30,70}})));
+  IDEAS.Controls.ControlHeating.HeatingCurves.HeatingCurve heatingCurve(
+    TSup_nominal=343.15,
+    TRet_nominal=323.15,
+    TOut_nominal=263.15,
+    use_TRoo_in=true)
+    annotation (Placement(transformation(extent={{12,-58},{32,-38}})));
 equation
-  connect(gainCon.y, preHeatFlowCon.Q_flow)
-    annotation (Line(points={{-28.6,60},{-40,60}},          color={0,0,127}));
-  connect(gainRad.y, preHeatFlowRad.Q_flow)
-    annotation (Line(points={{-26.6,0},{-40,0}},         color={0,0,127}));
-  connect(preHeatFlowRad.port, portRad)
-    annotation (Line(points={{-60,0},{-100,0},{-100,0}}, color={191,0,0}));
-  connect(preHeatFlowCon.port, portCon)
-    annotation (Line(points={{-60,60},{-100,60},{-100,60}}, color={191,0,0}));
   for i in 1:nZones loop
   end for;
-  connect(gainCon.u, QFlow) annotation (Line(points={{-14.8,60},{-8,60},{0,60},
-          {0,30},{108,30}}, color={0,0,127}));
-  connect(QFlow, gainRad.u) annotation (Line(points={{108,30},{54,30},{0,30},{0,
-          0},{-12.8,0}}, color={0,0,127}));
   annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,
             -100},{100,100}})), Icon(graphics={
         Rectangle(
@@ -109,4 +116,4 @@ equation
           color={0,0,127},
           smooth=Smooth.None,
           pattern=LinePattern.Dash)}));
-end PrescribedHeat_pid;
+end radiators;

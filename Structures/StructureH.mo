@@ -9,7 +9,8 @@ model StructureH "Standaard woning de schipjes"
       linearise=linearise));
 
    // linearisation
-     parameter Boolean linearise=true "Linearises building model equations";
+   parameter Boolean linearise=true "Linearises building model equations";
+   parameter Boolean linearise_zone = true;
 
   // Orientations
   final parameter Modelica.SIunits.Angle leftAng=63/180*Modelica.Constants.pi;
@@ -64,42 +65,48 @@ model StructureH "Standaard woning de schipjes"
     nSurf=10,
     redeclare package Medium = Medium,
     n50=6.74,
-    useFluidPorts=false)
+    useFluidPorts=false,
+    linearise=sim.linearise or linearise_zone)
     annotation (Placement(transformation(extent={{28,36},{48,56}})));
   IDEAS.Buildings.Linearisation.Components.LinZone keuken(
     V=17.13,
     nSurf=8,
     redeclare package Medium = Medium,
     n50=2.87,
-    useFluidPorts=false)
+    useFluidPorts=false,
+    linearise=sim.linearise or linearise_zone)
     annotation (Placement(transformation(extent={{28,-22},{48,-2}})));
   IDEAS.Buildings.Linearisation.Components.LinZone wc(
     V=3.86,
     nSurf=7,
     redeclare package Medium = Medium,
     n50=3.36,
-    useFluidPorts=false)
+    useFluidPorts=false,
+    linearise=sim.linearise or linearise_zone)
     annotation (Placement(transformation(extent={{28,-72},{48,-52}})));
   IDEAS.Buildings.Linearisation.Components.LinZone slaapkamer(
     V=24.17,
     nSurf=10,
     redeclare package Medium = Medium,
     n50=3.25,
-    useFluidPorts=false)
+    useFluidPorts=false,
+    linearise=sim.linearise or linearise_zone)
     annotation (Placement(transformation(extent={{28,-120},{48,-100}})));
   IDEAS.Buildings.Linearisation.Components.LinZone badkamer(
     V=8.09,
     nSurf=7,
     redeclare package Medium = Medium,
     n50=3.33,
-    useFluidPorts=false)
+    useFluidPorts=false,
+    linearise=sim.linearise or linearise_zone)
     annotation (Placement(transformation(extent={{30,-174},{50,-154}})));
   IDEAS.Buildings.Linearisation.Components.LinZone nachthal(
     V=7.24,
     nSurf=6,
     redeclare package Medium = Medium,
     n50=5.14,
-    useFluidPorts=false)
+    useFluidPorts=false,
+    linearise=sim.linearise or linearise_zone)
     annotation (Placement(transformation(extent={{32,-224},{52,-204}})));
 
   //----------- Internal walls -------------------------------------------------------
