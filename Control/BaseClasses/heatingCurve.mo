@@ -22,8 +22,8 @@ model heatingCurve
 equation
   connect(add.u2, comfortBoundaryISO7730_classB.TBouLow)
     annotation (Line(points={{-58,-16},{-69,-16},{-69,-15}}, color={0,0,127}));
-  connect(add.u1, comfortBoundaryISO7730_classB.TBouUp) annotation (Line(points
-        ={{-58,-4},{-68,-4},{-68,-5},{-69,-5}}, color={0,0,127}));
+  connect(add.u1, comfortBoundaryISO7730_classB.TBouUp) annotation (Line(points=
+         {{-58,-4},{-68,-4},{-68,-5},{-69,-5}}, color={0,0,127}));
   connect(add.y, heatingCurve.TRoo_in) annotation (Line(points={{-35,-10},{-30,
           -10},{-30,-4},{-21.04,-4}}, color={0,0,127}));
   connect(runningMeanTemperature6h.TRm, heatingCurve.TOut) annotation (Line(

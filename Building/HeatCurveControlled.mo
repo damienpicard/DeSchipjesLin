@@ -18,9 +18,9 @@ equation
     Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{
             100,100}})),
     experiment(
-      StopTime=315000,
+      StopTime=3.15e+007,
       __Dymola_NumberOfIntervals=50000,
       __Dymola_fixedstepsize=40,
-      __Dymola_Algorithm="Dassl"),
+      __Dymola_Algorithm="Euler"),
     __Dymola_experimentSetupOutput);
 end HeatCurveControlled;

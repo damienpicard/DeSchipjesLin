@@ -454,9 +454,9 @@ model StructureH "Standaard woning de schipjes"
     annotation (Placement(transformation(extent={{140,-30},{120,-10}})));
   IDEAS.Utilities.IO.heatPortPrescribedHeatFlow h2sRad1[nZones] if linearise
     annotation (Placement(transformation(extent={{140,10},{120,30}})));
-  Modelica.Blocks.Interfaces.RealInput QFlowCon[nZones] if linearise
+  Modelica.Blocks.Interfaces.RealInput QFlowCon[nZones](each start = 100) if linearise
     annotation (Placement(transformation(extent={{192,-32},{152,8}})));
-  Modelica.Blocks.Interfaces.RealInput QFlowRad[nZones] if linearise
+  Modelica.Blocks.Interfaces.RealInput QFlowRad[nZones](each start = 100) if linearise
     annotation (Placement(transformation(extent={{192,6},{152,46}})));
 equation
   connect(woonruimteHal.propsBus_a, woonruimte.propsBus[1]) annotation (Line(
