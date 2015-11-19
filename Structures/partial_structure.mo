@@ -1,5 +1,5 @@
 within DeSchipjesLin.Structures;
-model StructureH "Standaard woning de schipjes"
+model partial_structure "Standaard woning de schipjes"
 
   //Extensions
   extends IDEAS.Buildings.Linearisation.Interfaces.LinearisationInterface(sim(
@@ -9,14 +9,18 @@ model StructureH "Standaard woning de schipjes"
       linearise=linearise));
 
    // linearisation
+   parameter Real corrCV=1 "Multiplication factor for the zone air capacity";
+  parameter Real mSenFac=10
+    "Factor for scaling the sensible thermal mass of the volume";
+
    parameter Boolean linearise=true "Linearises building model equations";
    parameter Boolean linearise_zone = true;
 
   // Orientations
-  final parameter Modelica.SIunits.Angle leftAng=63/180*Modelica.Constants.pi;
-  final parameter Modelica.SIunits.Angle rightAng=243/180*Modelica.Constants.pi;
-  final parameter Modelica.SIunits.Angle frontAng=153/180*Modelica.Constants.pi;
-  final parameter Modelica.SIunits.Angle backAng=-27/180*Modelica.Constants.pi;
+   parameter Modelica.SIunits.Angle leftAng=63/180*Modelica.Constants.pi;
+   parameter Modelica.SIunits.Angle rightAng=243/180*Modelica.Constants.pi;
+   parameter Modelica.SIunits.Angle frontAng=153/180*Modelica.Constants.pi;
+   parameter Modelica.SIunits.Angle backAng=-27/180*Modelica.Constants.pi;
 
   parameter Modelica.SIunits.Length isolatieTest=0;
 
@@ -53,7 +57,7 @@ model StructureH "Standaard woning de schipjes"
     "Construction nodes for heat gains by embedded layers" annotation (
       Placement(transformation(extent={{90,50},{110,70}}),  iconTransformation(
           extent={{90,50},{110,70}})));
-  Modelica.Blocks.Interfaces.RealOutput[nZones] TSensor(final quantity="ThermodynamicTemperature",unit="K",displayUnit="degC", min=0)
+  Modelica.Blocks.Interfaces.RealOutput[nZones] TSensor( quantity="ThermodynamicTemperature",unit="K",displayUnit="degC", min=0)
     "Sensor temperature of the zones"
     annotation (Placement(transformation(extent={{96,-70},{116,-50}}),
         iconTransformation(extent={{96,-70},{116,-50}})));
@@ -61,60 +65,71 @@ model StructureH "Standaard woning de schipjes"
   //----------- Zones -------------------------------------------------------
   IDEAS.Buildings.Linearisation.Components.LinZone woonruimte(
     V=70.1,
-    corrCV=5,
     nSurf=10,
     redeclare package Medium = Medium,
     n50=6.74,
+    corrCV=corrCV,
     useFluidPorts=false,
-    linearise=sim.linearise or linearise_zone)
+    mSenFac=mSenFac,
+    simplifyAirModel=sim.linearise or linearise_zone)
     annotation (Placement(transformation(extent={{28,36},{48,56}})));
   IDEAS.Buildings.Linearisation.Components.LinZone keuken(
     V=17.13,
     nSurf=8,
     redeclare package Medium = Medium,
     n50=2.87,
+    corrCV=corrCV,
     useFluidPorts=false,
-    linearise=sim.linearise or linearise_zone)
+    mSenFac=mSenFac,
+    simplifyAirModel=sim.linearise or linearise_zone)
     annotation (Placement(transformation(extent={{28,-22},{48,-2}})));
   IDEAS.Buildings.Linearisation.Components.LinZone wc(
     V=3.86,
     nSurf=7,
     redeclare package Medium = Medium,
     n50=3.36,
+    corrCV=corrCV,
     useFluidPorts=false,
-    linearise=sim.linearise or linearise_zone)
+    mSenFac=mSenFac,
+    simplifyAirModel=sim.linearise or linearise_zone)
     annotation (Placement(transformation(extent={{28,-72},{48,-52}})));
   IDEAS.Buildings.Linearisation.Components.LinZone slaapkamer(
     V=24.17,
     nSurf=10,
     redeclare package Medium = Medium,
     n50=3.25,
+    corrCV=corrCV,
     useFluidPorts=false,
-    linearise=sim.linearise or linearise_zone)
+    mSenFac=mSenFac,
+    simplifyAirModel=sim.linearise or linearise_zone)
     annotation (Placement(transformation(extent={{28,-120},{48,-100}})));
   IDEAS.Buildings.Linearisation.Components.LinZone badkamer(
     V=8.09,
     nSurf=7,
     redeclare package Medium = Medium,
     n50=3.33,
+    corrCV=corrCV,
     useFluidPorts=false,
-    linearise=sim.linearise or linearise_zone)
+    mSenFac=mSenFac,
+    simplifyAirModel=sim.linearise or linearise_zone)
     annotation (Placement(transformation(extent={{30,-174},{50,-154}})));
   IDEAS.Buildings.Linearisation.Components.LinZone nachthal(
     V=7.24,
     nSurf=6,
     redeclare package Medium = Medium,
     n50=5.14,
+    corrCV=corrCV,
     useFluidPorts=false,
-    linearise=sim.linearise or linearise_zone)
+    mSenFac=mSenFac,
+    simplifyAirModel=sim.linearise or linearise_zone)
     annotation (Placement(transformation(extent={{32,-224},{52,-204}})));
 
   //----------- Internal walls -------------------------------------------------------
   IDEAS.Buildings.Components.InternalWall woonruimteKeuken(
     AWall=6.97,
     azi=leftAng,
-    final insulationThickness=0,
-    redeclare final Data.Constructions.Old.BinnenMuur constructionType,
+     insulationThickness=0,
+    redeclare Data.Constructions.Old.BinnenMuur  constructionType,
     inc=1.5707963267949) annotation (Placement(transformation(
         extent={{-5,10},{5,-10}},
         rotation=180,
@@ -123,8 +138,8 @@ model StructureH "Standaard woning de schipjes"
     AWall=3.32,
     inc=0,
     azi=0,
-    final insulationThickness=0,
-    redeclare final Data.Constructions.Old.BinnenMuur constructionType)
+     insulationThickness=0,
+    redeclare Data.Constructions.Old.BinnenMuur  constructionType)
     annotation (Placement(transformation(
         extent={{5,-10},{-5,10}},
         rotation=270,
@@ -133,8 +148,8 @@ model StructureH "Standaard woning de schipjes"
     AWall=3.61,
     inc=0,
     azi=0,
-    final insulationThickness=0,
-    redeclare final Data.Constructions.Old.BinnenMuur constructionType)
+     insulationThickness=0,
+    redeclare Data.Constructions.Old.BinnenMuur  constructionType)
     annotation (Placement(transformation(
         extent={{-5,10},{5,-10}},
         rotation=90,
@@ -143,16 +158,16 @@ model StructureH "Standaard woning de schipjes"
     AWall=10.79,
     inc=0,
     azi=0,
-    final insulationThickness=0,
-    redeclare final Data.Constructions.Old.BinnenMuur constructionType)
+     insulationThickness=0,
+    redeclare Data.Constructions.Old.BinnenMuur  constructionType)
     annotation (Placement(transformation(
         extent={{-5,10},{5,-10}},
         rotation=90,
         origin={-7,30})));
   IDEAS.Buildings.Components.InternalWall keukenWC(
     AWall=1.96,
-    final insulationThickness=0,
-    redeclare final Data.Constructions.Old.BinnenMuur constructionType,
+     insulationThickness=0,
+    redeclare Data.Constructions.Old.BinnenMuur  constructionType,
     inc=1.5707963267949,
     azi=frontAng) annotation (Placement(transformation(
         extent={{5,-10},{-5,10}},
@@ -160,30 +175,30 @@ model StructureH "Standaard woning de schipjes"
         origin={-9,-24})));
   IDEAS.Buildings.Components.InternalWall slaapkamerBadLiggend(
     AWall=4.26,
-    final insulationThickness=0,
-    redeclare final Data.Constructions.Old.BinnenMuur constructionType,
+     insulationThickness=0,
+    redeclare Data.Constructions.Old.BinnenMuur  constructionType,
     inc=1.5707963267949,
     azi=backAng)
     annotation (Placement(transformation(extent={{-50,-130},{-60,-110}})));
   IDEAS.Buildings.Components.InternalWall slaapkamerBadStaand(
     AWall=1.12,
-    final insulationThickness=0,
-    redeclare final Data.Constructions.Old.BinnenMuur constructionType,
+     insulationThickness=0,
+    redeclare Data.Constructions.Old.BinnenMuur  constructionType,
     inc=1.5707963267949,
     azi=backAng)
     annotation (Placement(transformation(extent={{-26,-130},{-36,-110}})));
   IDEAS.Buildings.Components.InternalWall slaapkamerHal(
     AWall=3.81,
-    final insulationThickness=0,
-    redeclare final Data.Constructions.Old.BinnenMuur constructionType,
+     insulationThickness=0,
+    redeclare Data.Constructions.Old.BinnenMuur  constructionType,
     inc=1.5707963267949,
     azi=backAng)
     annotation (Placement(transformation(extent={{-72,-130},{-82,-110}})));
 
   IDEAS.Buildings.Components.InternalWall badkamerHal(
     AWall=2.4,
-    final insulationThickness=0,
-    redeclare final Data.Constructions.Old.BinnenMuur constructionType,
+     insulationThickness=0,
+    redeclare Data.Constructions.Old.BinnenMuur  constructionType,
     inc=1.5707963267949,
     azi=backAng)
     annotation (Placement(transformation(extent={{-88,-186},{-98,-166}})));
@@ -191,16 +206,16 @@ model StructureH "Standaard woning de schipjes"
   //----------- Boundary walls -------------------------------------------------------
   IDEAS.Buildings.Components.BoundaryWall woonruimteGemeenschappelijk(
     AWall=17.10,
-    final insulationThickness=0,
-    redeclare final Data.Constructions.Old.GemeneMuur constructionType,
+     insulationThickness=0,
+    redeclare Data.Constructions.Old.GemeneMuur  constructionType,
     inc=1.5707963267949,
     azi=rightAng)
     annotation (Placement(transformation(extent={{-100,58},{-90,78}})));
 
   IDEAS.Buildings.Components.BoundaryWall keukenGemeenschappelijk(
     AWall=5.92,
-    final insulationThickness=0,
-    redeclare final Data.Constructions.Old.GemeneMuur constructionType,
+     insulationThickness=0,
+    redeclare Data.Constructions.Old.GemeneMuur  constructionType,
     inc=1.5707963267949,
     azi=leftAng) annotation (Placement(transformation(
         extent={{-5,-10},{5,10}},
@@ -208,22 +223,22 @@ model StructureH "Standaard woning de schipjes"
         origin={-45,-24})));
   IDEAS.Buildings.Components.BoundaryWall WCGemeenschappelijk(
     AWall=2.85,
-    final insulationThickness=0,
-    redeclare final Data.Constructions.Old.GemeneMuur constructionType,
+     insulationThickness=0,
+    redeclare Data.Constructions.Old.GemeneMuur  constructionType,
     inc=1.5707963267949,
     azi=leftAng)
     annotation (Placement(transformation(extent={{-20,-84},{-10,-64}})));
   IDEAS.Buildings.Components.BoundaryWall slaapkamerGemeenschappelijk(
     AWall=10.27,
-    final insulationThickness=0,
-    redeclare final Data.Constructions.Old.GemeneMuur constructionType,
+     insulationThickness=0,
+    redeclare Data.Constructions.Old.GemeneMuur  constructionType,
     inc=1.5707963267949,
     azi=rightAng)
     annotation (Placement(transformation(extent={{-104,-130},{-94,-110}})));
   IDEAS.Buildings.Components.BoundaryWall halGemeenschappelijk(
     AWall=4.05,
-    final insulationThickness=0,
-    redeclare final Data.Constructions.Old.GemeneMuur constructionType,
+     insulationThickness=0,
+    redeclare Data.Constructions.Old.GemeneMuur  constructionType,
     inc=1.5707963267949,
     azi=rightAng)
     annotation (Placement(transformation(extent={{-44,-240},{-34,-220}})));
@@ -231,8 +246,8 @@ model StructureH "Standaard woning de schipjes"
   //----------- Outer walls -------------------------------------------------------
   IDEAS.Buildings.Components.OuterWall woonruimteKoer(
     AWall=5.15,
-    redeclare final Data.Constructions.Renovated.GevelType2 constructionType,
-    final insulationThickness=0,
+    redeclare Data.Constructions.Renovated.GevelType2  constructionType,
+     insulationThickness=0,
     inc=1.5707963267949,
     azi=leftAng)
     annotation (Placement(transformation(extent={{-150,58},{-140,78}})));
@@ -241,29 +256,29 @@ model StructureH "Standaard woning de schipjes"
     inc=0,
     azi=0,
     AWall=woonruimteA,
-    redeclare final Data.Constructions.Renovated.Vloer1 constructionType,
-    final insulationThickness=0) annotation (Placement(transformation(
+    redeclare Data.Constructions.Renovated.Vloer1  constructionType,
+     insulationThickness=0) annotation (Placement(transformation(
         extent={{-5,-10},{5,10}},
         rotation=90,
         origin={-105,28})));
   IDEAS.Buildings.Components.OuterWall woonruimteAchtergevel(
     AWall=13.23,
-    redeclare final Data.Constructions.Renovated.GevelType1 constructionType,
-    final insulationThickness=0,
+    redeclare Data.Constructions.Renovated.GevelType1  constructionType,
+     insulationThickness=0,
     inc=1.5707963267949,
     azi=backAng)
     annotation (Placement(transformation(extent={{-126,58},{-116,78}})));
   IDEAS.Buildings.Components.OuterWall woonruimteVoorgevel(
     AWall=9.29,
-    redeclare final Data.Constructions.Renovated.GevelType1 constructionType,
-    final insulationThickness=0,
+    redeclare Data.Constructions.Renovated.GevelType1  constructionType,
+     insulationThickness=0,
     azi=frontAng,
     inc=1.5707963267949)
     annotation (Placement(transformation(extent={{-170,34},{-160,54}})));
   IDEAS.Buildings.Components.OuterWall keukenAchtergevel(
     AWall=7.56,
-    redeclare final Data.Constructions.Renovated.GevelType1 constructionType,
-    final insulationThickness=0,
+    redeclare Data.Constructions.Renovated.GevelType1  constructionType,
+     insulationThickness=0,
     inc=1.5707963267949,
     azi=backAng)
     annotation (Placement(transformation(extent={{-172,-24},{-162,-4}})));
@@ -272,8 +287,8 @@ model StructureH "Standaard woning de schipjes"
     PWall=11.16,
     inc=0,
     azi=0,
-    redeclare final Data.Constructions.Renovated.Vloer1 constructionType,
-    final insulationThickness=0) annotation (Placement(transformation(
+    redeclare Data.Constructions.Renovated.Vloer1  constructionType,
+     insulationThickness=0) annotation (Placement(transformation(
         extent={{-5,-10},{5,10}},
         rotation=90,
         origin={-69,-24})));
@@ -281,24 +296,24 @@ model StructureH "Standaard woning de schipjes"
     AWall=keukenA,
     inc=0,
     azi=0,
-    redeclare final Data.Constructions.Old.DakBijBouw constructionType,
-    final insulationThickness=0.08,
-    redeclare final Data.Insulation.RotsWolSKepers insulationType) annotation (
+    redeclare Data.Constructions.Old.DakBijBouw  constructionType,
+     insulationThickness=0.08,
+    redeclare Data.Insulation.RotsWolSKepers  insulationType) annotation (
       Placement(transformation(
         extent={{-5,-10},{5,10}},
         rotation=270,
         origin={-143,2})));
   IDEAS.Buildings.Components.OuterWall WCKoer(
     AWall=2.83,
-    redeclare final Data.Constructions.Renovated.GevelType2 constructionType,
-    final insulationThickness=0,
+    redeclare Data.Constructions.Renovated.GevelType2  constructionType,
+     insulationThickness=0,
     inc=1.5707963267949,
     azi=rightAng)
     annotation (Placement(transformation(extent={{-170,-74},{-160,-54}})));
   IDEAS.Buildings.Components.OuterWall WCVoorgevel(
     AWall=2.65,
-    redeclare final Data.Constructions.Renovated.GevelType3 constructionType,
-    final insulationThickness=0,
+    redeclare Data.Constructions.Renovated.GevelType3  constructionType,
+     insulationThickness=0,
     inc=1.5707963267949,
     azi=frontAng)
     annotation (Placement(transformation(extent={{-134,-82},{-124,-62}})));
@@ -307,8 +322,8 @@ model StructureH "Standaard woning de schipjes"
     inc=0,
     azi=0,
     PWall=4.74,
-    final insulationThickness=0,
-    redeclare final Data.Constructions.Renovated.Vloer1 constructionType)
+     insulationThickness=0,
+    redeclare Data.Constructions.Renovated.Vloer1  constructionType)
     annotation (Placement(transformation(
         extent={{-5,-10},{5,10}},
         rotation=90,
@@ -317,40 +332,40 @@ model StructureH "Standaard woning de schipjes"
     AWall=wcA,
     inc=0,
     azi=0,
-    final insulationThickness=0.08,
-    redeclare final Data.Constructions.Old.DakBijBouw constructionType,
-    redeclare final Data.Insulation.RotsWolSKepers insulationType) annotation (
+     insulationThickness=0.08,
+    redeclare Data.Constructions.Old.DakBijBouw  constructionType,
+    redeclare Data.Insulation.RotsWolSKepers  insulationType) annotation (
       Placement(transformation(
         extent={{-5,-10},{5,10}},
         rotation=270,
         origin={-79,-44})));
   IDEAS.Buildings.Components.OuterWall slaapkamerZijgevel(
     AWall=2.41,
-    redeclare final Data.Constructions.Renovated.GevelType1 constructionType,
-    final insulationThickness=0,
+    redeclare Data.Constructions.Renovated.GevelType1  constructionType,
+     insulationThickness=0,
     inc=1.5707963267949,
     azi=leftAng)
     annotation (Placement(transformation(extent={{-168,-120},{-158,-100}})));
   IDEAS.Buildings.Components.OuterWall slaapkamerVoorgevel(
     AWall=13.22,
-    redeclare final Data.Constructions.Renovated.GevelType1 constructionType,
-    final insulationThickness=0,
+    redeclare Data.Constructions.Renovated.GevelType1  constructionType,
+     insulationThickness=0,
     inc=1.5707963267949,
     azi=frontAng)
     annotation (Placement(transformation(extent={{-128,-130},{-118,-110}})));
 
   IDEAS.Buildings.Components.OuterWall halAchtergevel(
     AWall=1.06,
-    redeclare final Data.Constructions.Renovated.GevelType1 constructionType,
-    final insulationThickness=0,
+    redeclare Data.Constructions.Renovated.GevelType1  constructionType,
+     insulationThickness=0,
     inc=1.5707963267949,
     azi=backAng)
     annotation (Placement(transformation(extent={{-168,-224},{-158,-204}})));
   IDEAS.Buildings.Components.OuterWall halDak(
     AWall=6.89,
-    final insulationThickness=0.08,
-    redeclare final Data.Constructions.Old.DakHoofdGebouw constructionType,
-    redeclare final Data.Insulation.RotsWolSpanten insulationType,
+     insulationThickness=0.08,
+    redeclare Data.Constructions.Old.DakHoofdGebouw  constructionType,
+    redeclare Data.Insulation.RotsWolSpanten  insulationType,
     inc=0,
     azi=0) annotation (Placement(transformation(
         extent={{-5,-10},{5,10}},
@@ -359,9 +374,9 @@ model StructureH "Standaard woning de schipjes"
 
   IDEAS.Buildings.Components.OuterWall slaapkamerDakRechts(
     AWall=14.05,
-    final insulationThickness=0.08,
-    redeclare final Data.Constructions.Old.DakHoofdGebouw constructionType,
-    redeclare final Data.Insulation.RotsWolSpanten insulationType,
+     insulationThickness=0.08,
+    redeclare Data.Constructions.Old.DakHoofdGebouw  constructionType,
+    redeclare Data.Insulation.RotsWolSpanten  insulationType,
     inc=0,
     azi=rightAng) annotation (Placement(transformation(
         extent={{-5,-10},{5,10}},
@@ -370,33 +385,33 @@ model StructureH "Standaard woning de schipjes"
 
   IDEAS.Buildings.Components.OuterWall slaapkamerDakLinks(
     AWall=11.73,
-    redeclare final Data.Constructions.Old.DakHoofdGebouw constructionType,
-    final insulationThickness=0.08,
-    redeclare final Data.Insulation.RotsWolSpanten insulationType,
+    redeclare Data.Constructions.Old.DakHoofdGebouw  constructionType,
+     insulationThickness=0.08,
+    redeclare Data.Insulation.RotsWolSpanten  insulationType,
     inc=0,
     azi=leftAng) annotation (Placement(transformation(
         extent={{-5,-10},{5,10}},
         rotation=270,
         origin={-53,-94})));
-  IDEAS.Buildings.Components.OuterWall backRad(
+  IDEAS.Buildings.Components.OuterWall badkamerAchtergevel(
     AWall=1.34,
-    redeclare final Data.Constructions.Renovated.GevelType1 constructionType,
-    final insulationThickness=0,
-    inc=1.5707963267949,
-    azi=backAng)
+    redeclare Data.Constructions.Renovated.GevelType1 constructionType,
+    insulationThickness=0,
+    azi=backAng,
+    inc=1.5707963267949)
     annotation (Placement(transformation(extent={{-168,-176},{-158,-156}})));
   IDEAS.Buildings.Components.OuterWall badkamerZijgevel(
     AWall=4.05,
-    redeclare final Data.Constructions.Renovated.GevelType1 constructionType,
-    final insulationThickness=0,
+    redeclare Data.Constructions.Renovated.GevelType1  constructionType,
+     insulationThickness=0,
     inc=1.5707963267949,
     azi=leftAng)
     annotation (Placement(transformation(extent={{-120,-186},{-110,-166}})));
   IDEAS.Buildings.Components.OuterWall badkamerDak(
     AWall=8.74,
-    final insulationThickness=0.08,
-    redeclare final Data.Constructions.Old.DakHoofdGebouw constructionType,
-    redeclare final Data.Insulation.RotsWolSpanten insulationType,
+     insulationThickness=0.08,
+    redeclare Data.Constructions.Old.DakHoofdGebouw  constructionType,
+    redeclare Data.Insulation.RotsWolSpanten  insulationType,
     inc=0,
     azi=rightAng) annotation (Placement(transformation(
         extent={{-5,-10},{5,10}},
@@ -406,8 +421,8 @@ model StructureH "Standaard woning de schipjes"
   IDEAS.Buildings.Linearisation.Components.LinWindow woonruimteWindow(
     A=5.78,
     frac=0.12,
-    redeclare final Data.Glass.DubbelGlas glazing,
-    redeclare final Data.Frames.LoofHout fraType,
+    redeclare Data.Glass.DubbelGlas  glazing,
+    redeclare Data.Frames.LoofHout  fraType,
     azi=frontAng,
     indexWindow=1,
     inc=1.5707963267949)
@@ -415,8 +430,8 @@ model StructureH "Standaard woning de schipjes"
   IDEAS.Buildings.Linearisation.Components.LinWindow keukenWindowLarge(
     A=4.57,
     frac=0.15,
-    redeclare final Data.Glass.DubbelGlas glazing,
-    redeclare final Data.Frames.LoofHout fraType,
+    redeclare Data.Glass.DubbelGlas  glazing,
+    redeclare Data.Frames.LoofHout  fraType,
     azi=frontAng,
     inc=1.5707963267949,
     indexWindow=2)
@@ -424,8 +439,8 @@ model StructureH "Standaard woning de schipjes"
   IDEAS.Buildings.Linearisation.Components.LinWindow keukenWindowSmall(
     A=1.05,
     frac=0.25,
-    redeclare final Data.Glass.DubbelGlas glazing,
-    redeclare final Data.Frames.LoofHout fraType,
+    redeclare Data.Glass.DubbelGlas  glazing,
+    redeclare Data.Frames.LoofHout  fraType,
     azi=frontAng,
     inc=1.5707963267949,
     indexWindow=3)
@@ -433,8 +448,8 @@ model StructureH "Standaard woning de schipjes"
   IDEAS.Buildings.Linearisation.Components.LinWindow raamwc(
     A=0.07,
     frac=0.89,
-    redeclare final Data.Glass.DubbelGlas glazing,
-    redeclare final Data.Frames.LoofHout fraType,
+    redeclare Data.Glass.DubbelGlas  glazing,
+    redeclare Data.Frames.LoofHout  fraType,
     azi=frontAng,
     indexWindow=4,
     inc=1.5707963267949)
@@ -442,8 +457,8 @@ model StructureH "Standaard woning de schipjes"
   IDEAS.Buildings.Linearisation.Components.LinWindow slaapkamerRaam(
     A=0.75,
     frac=0.21,
-    redeclare final Data.Glass.DubbelGlas glazing,
-    redeclare final Data.Frames.LoofHout fraType,
+    redeclare Data.Glass.DubbelGlas  glazing,
+    redeclare Data.Frames.LoofHout  fraType,
     azi=frontAng,
     inc=1.5707963267949,
     indexWindow=5)
@@ -458,6 +473,7 @@ model StructureH "Standaard woning de schipjes"
     annotation (Placement(transformation(extent={{192,-32},{152,8}})));
   Modelica.Blocks.Interfaces.RealInput QFlowRad[nZones](each start = 100) if linearise
     annotation (Placement(transformation(extent={{192,6},{152,46}})));
+
 equation
   connect(woonruimteHal.propsBus_a, woonruimte.propsBus[1]) annotation (Line(
       points={{-57,35},{-57,42},{-58,42},{-58,50},{28,50},{28,51.8}},
@@ -686,7 +702,8 @@ equation
       color={255,204,51},
       thickness=0.5,
       smooth=Smooth.None));
-  connect(backRad.propsBus_a, badkamer.propsBus[7]) annotation (Line(
+  connect(badkamerAchtergevel.propsBus_a, badkamer.propsBus[7]) annotation (
+      Line(
       points={{-158,-162},{-126,-162},{-126,-161.714},{30,-161.714}},
       color={255,204,51},
       thickness=0.5,
@@ -885,4 +902,4 @@ First implementation
 </html>"),
     experiment(StopTime=1e+006),
     __Dymola_experimentSetupOutput);
-end StructureH;
+end partial_structure;

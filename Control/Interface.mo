@@ -1,6 +1,9 @@
 within DeSchipjesLin.Control;
 partial model Interface
 
+  replaceable HeatingSystems.partial_heaSysPar heaSysPar constrainedby
+    HeatingSystems.partial_heaSysPar annotation(choicesAllMatching);
+    annotation (Placement(transformation(extent={{-90,72},{-70,92}})));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,
             -100},{100,100}}),
                    graphics={

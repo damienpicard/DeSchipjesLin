@@ -2,7 +2,7 @@ within DeSchipjesLin.Structures.Examples;
 model structureH
   extends Modelica.Icons.Example;
 
-  StructureH haarhakkerStraatHouse(linearise=false)
+  partial_structure haarhakkerStraatHouse(linearise=false)
     annotation (Placement(transformation(extent={{-14,36},{10,60}})));
   Modelica.Blocks.Interfaces.RealOutput TSensor1[6]
     "Sensor temperature of the zones"

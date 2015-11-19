@@ -4,7 +4,8 @@ model PIDCtrl
 
   parameter Integer nZones = 6;
 
-  IDEAS.Controls.Continuous.LimPID conPID[nZones](each Ti=600, each Td=600)
+  IDEAS.Controls.Continuous.LimPID conPID[nZones](each Ti=600, each Td=600,
+    each k=0.1)
     annotation (Placement(transformation(extent={{10,-10},{-10,10}})));
   Modelica.Blocks.Interfaces.RealInput TZones[nZones](unit="K", displayUnit="degC")
     annotation (Placement(transformation(extent={{128,-80},{88,-40}})));
@@ -13,9 +14,6 @@ model PIDCtrl
   Modelica.Blocks.Interfaces.RealOutput QFlow[nZones]
     "Connector of actuator output signal"
     annotation (Placement(transformation(extent={{-100,-10},{-120,10}})));
-  HeatingSystems.heatingSystemParameters
-                          heaSysPar
-    annotation (Placement(transformation(extent={{-90,74},{-70,94}})));
   Modelica.Blocks.Math.Gain gain[nZones](k=heaSysPar.powerZones)
     annotation (Placement(transformation(extent={{-40,-10},{-60,10}})));
 equation
