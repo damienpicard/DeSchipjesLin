@@ -1,5 +1,5 @@
 within DeSchipjesLin.Structures;
-model StruRenovated
+model StruRenovatedLight
   extends partial_structure(
     woonruimte(n50=6.74),
     keuken(n50=2.87),
@@ -11,13 +11,16 @@ model StruRenovated
         redeclare final Data.Constructions.Renovated.Vloer1
         constructionType, final insulationThickness=0),
     woonruimteAchtergevel(
-      redeclare final Data.Constructions.Renovated.GevelType1
+      redeclare final Data.Constructions.LichtStructure.WallWoodStructure
         constructionType, final insulationThickness=0),
-    woonruimteVoorgevel(redeclare final Data.Constructions.Renovated.GevelType1
+    woonruimteVoorgevel(redeclare final
+        Data.Constructions.LichtStructure.WallWoodStructure
         constructionType, final insulationThickness=0),
-    woonruimteKoer(redeclare final Data.Constructions.Renovated.GevelType2
+    woonruimteKoer(redeclare final
+        Data.Constructions.LichtStructure.WallWoodStructure
         constructionType, final insulationThickness=0),
-    keukenAchtergevel(redeclare final Data.Constructions.Renovated.GevelType1
+    keukenAchtergevel(redeclare final
+        Data.Constructions.LichtStructure.WallWoodStructure
         constructionType, final insulationThickness=0),
     woonruimteWindow(redeclare final Data.Glass.DubbelGlas    glazing,
         redeclare final Data.Frames.LoofHout                                 fraType),
@@ -32,23 +35,41 @@ model StruRenovated
         redeclare final Data.Frames.LoofHout                                 fraType),
     keukenVloer(redeclare final Data.Constructions.Renovated.Vloer1
         constructionType, final insulationThickness=0),
-    WCKoer(redeclare final Data.Constructions.Renovated.GevelType2
+    WCKoer(redeclare final Data.Constructions.LichtStructure.WallWoodStructure
         constructionType, final insulationThickness=0),
-    WCVoorgevel(redeclare final Data.Constructions.Renovated.GevelType3
+    WCVoorgevel(redeclare final
+        Data.Constructions.LichtStructure.WallWoodStructure
         constructionType, final insulationThickness=0),
     WCVloer(final insulationThickness=0, redeclare final
         Data.Constructions.Renovated.Vloer1
         constructionType),
-    slaapkamerZijgevel(redeclare final Data.Constructions.Renovated.GevelType1
+    slaapkamerZijgevel(redeclare final
+        Data.Constructions.LichtStructure.WallWoodStructure
         constructionType, final insulationThickness=0),
-    slaapkamerVoorgevel(redeclare final Data.Constructions.Renovated.GevelType1
+    slaapkamerVoorgevel(redeclare final
+        Data.Constructions.LichtStructure.WallWoodStructure
         constructionType, final insulationThickness=0),
-    badkamerAchtergevel(redeclare final Data.Constructions.Renovated.GevelType1
+    badkamerAchtergevel(redeclare final
+        Data.Constructions.LichtStructure.WallWoodStructure
         constructionType, final insulationThickness=0),
-    badkamerZijgevel(redeclare final Data.Constructions.Renovated.GevelType1
+    badkamerZijgevel(redeclare final
+        Data.Constructions.LichtStructure.WallWoodStructure
         constructionType, final insulationThickness=0),
-    halAchtergevel(redeclare final Data.Constructions.Renovated.GevelType1
-        constructionType, final insulationThickness=0));
+    halAchtergevel(redeclare final
+        Data.Constructions.LichtStructure.WallWoodStructure
+        constructionType, final insulationThickness=0),
+    keukenDak(insulationThickness=0, redeclare
+        Data.Constructions.LichtStructure.RoofWood constructionType),
+    WCDak(insulationThickness=0, redeclare
+        Data.Constructions.LichtStructure.RoofWood constructionType),
+    slaapkamerDakLinks(insulationThickness=0, redeclare
+        Data.Constructions.LichtStructure.RoofWood constructionType),
+    slaapkamerDakRechts(insulationThickness=0, redeclare
+        Data.Constructions.LichtStructure.RoofWood constructionType),
+    badkamerDak(insulationThickness=0, redeclare
+        Data.Constructions.LichtStructure.RoofWood constructionType),
+    halDak(insulationThickness=0, redeclare
+        Data.Constructions.LichtStructure.RoofWood constructionType));
         annotation (   Documentation(info="<html>
 <p>
 This model allows comparing the simulation accuracy of the 
@@ -74,4 +95,4 @@ First implementation
 </li>
 </ul>
 </html>"));
-end StruRenovated;
+end StruRenovatedLight;

@@ -2,9 +2,9 @@ within DeSchipjesLin.Structures.Examples;
 model comparison
   extends Modelica.Icons.Example;
 
-  structureH structureH1
+  struRenovated structureH1
     annotation (Placement(transformation(extent={{-40,40},{-20,60}})));
-  structureHSSM structureHSSM1
+  struRenovatedSSM structureHSSM1
     annotation (Placement(transformation(extent={{-40,-60},{-20,-40}})));
   Modelica.Blocks.Math.Add add[6](k2=-1)
     annotation (Placement(transformation(extent={{20,-10},{40,10}})));

@@ -83,10 +83,10 @@ you may need to run the following script in order to create the state space mode
 <code>
 OutputCPUtime:=false;<br/>
 re=Modelica_LinearSystems2.ModelAnalysis.Linearize(\"DeSchipjesLin.Structures.StruOld\");<br/>
-writeMatrix(fileName=\"StruOld.mat\",matrixName=\"A\",matrix=re.A);<br/>
-writeMatrix(fileName=\"StruOld.mat\",matrixName=\"B\",matrix=re.B, append=true);<br/>
-writeMatrix(fileName=\"StruOld.mat\",matrixName=\"C\",matrix=re.C, append=true);<br/>
-writeMatrix(fileName=\"StruOld.mat\",matrixName=\"D\",matrix=re.D, append=true);<br/>
+writeMatrix(fileName=\"ssmStruOld.mat\",matrixName=\"A\",matrix=re.A);<br/>
+writeMatrix(fileName=\"ssmStruOld.mat\",matrixName=\"B\",matrix=re.B, append=true);<br/>
+writeMatrix(fileName=\"ssmStruOld.mat\",matrixName=\"C\",matrix=re.C, append=true);<br/>
+writeMatrix(fileName=\"ssmStruOld.mat\",matrixName=\"D\",matrix=re.D, append=true);<br/>
 OutputCPUtime:=true;</code>
 </html>", revisions="<html>
 <ul>

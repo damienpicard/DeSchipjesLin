@@ -8,8 +8,12 @@ model partial_structure "Standaard woning de schipjes"
       nLayWin=3,
       linearise=linearise));
 
+  Real[ nZones] U_equivalent={woonruimte.U_equivalent, keuken.U_equivalent, wc.U_equivalent, slaapkamer.U_equivalent, badkamer.U_equivalent, nachthal.U_equivalent};
+  Real[ nZones] ATraExt={woonruimte.ATraExt, keuken.ATraExt, wc.ATraExt, slaapkamer.ATraExt, badkamer.ATraExt, nachthal.ATraExt};
+  Real U_value = sum(U_equivalent.*ATraExt)/ATraExtTot;
+  Real ATraExtTot = sum(ATraExt);
    // linearisation
-   parameter Real corrCV=1 "Multiplication factor for the zone air capacity";
+  parameter Real corrCV=1 "Multiplication factor for the zone air capacity";
   parameter Real mSenFac=10
     "Factor for scaling the sensible thermal mass of the volume";
 

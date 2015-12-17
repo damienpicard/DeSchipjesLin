@@ -12,4 +12,6 @@ model preComputedReno
         fraType),
     slaapkamerRaam(redeclare final Structures.Data.Glass.DubbelGlas      glazing,
         redeclare final Structures.Data.Frames.LoofHout                                 fraType));
+  annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,
+            -100},{100,100}})));
 end preComputedReno;
