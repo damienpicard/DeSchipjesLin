@@ -6,6 +6,7 @@ model Occupant
   parameter Real corTBouLowNight = 0;
   parameter Real corTBouLowDay = 0;
 
+protected
   BaseClasses.ComfortBoundaryISO7730_classB comfortBoundaryISO7730_classB
     annotation (Placement(transformation(extent={{-80,-10},{-60,10}})));
   Modelica.Blocks.Logical.GreaterThreshold greaterThreshold(each threshold=22)
@@ -36,15 +37,18 @@ model Occupant
         origin={-30,50})));
   Modelica.Blocks.Logical.Or  or1
     annotation (Placement(transformation(extent={{-2,58},{18,78}})));
+public
   Modelica.Blocks.Interfaces.RealOutput TZoneSetUp(unit="K", displayUnit="degC")
     "Connector of Real output signal"
     annotation (Placement(transformation(extent={{100,10},{120,30}})));
+
   Modelica.Blocks.Interfaces.RealOutput TZoneSetLow(unit="K", displayUnit=
         "degC") "Connector of Real output signal"
     annotation (Placement(transformation(extent={{100,-30},{120,-10}})));
   Modelica.Blocks.Interfaces.RealOutput TRefControl(unit="K", displayUnit="degC")
     "Connector of Real output signal"
     annotation (Placement(transformation(extent={{100,-70},{120,-50}})));
+protected
   Modelica.Blocks.Logical.Switch switchBouLow1
                                               annotation (Placement(
         transformation(

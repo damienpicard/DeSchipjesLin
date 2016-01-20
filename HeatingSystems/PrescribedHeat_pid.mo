@@ -7,6 +7,7 @@ model PrescribedHeat_pid
     annotation (Placement(transformation(extent={{-110,-10},{-90,10}})));
   Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_b portCon[nZones]
     annotation (Placement(transformation(extent={{-110,50},{-90,70}})));
+protected
   Modelica.Thermal.HeatTransfer.Sources.PrescribedHeatFlow preHeatFlowCon[
     nZones] annotation (Placement(transformation(extent={{-40,50},{-60,70}})));
   Modelica.Thermal.HeatTransfer.Sources.PrescribedHeatFlow preHeatFlowRad[
@@ -15,6 +16,7 @@ model PrescribedHeat_pid
     annotation (Placement(transformation(extent={{-14,-6},{-26,6}})));
   Modelica.Blocks.Math.Gain gainCon[nZones](k=0.6)
     annotation (Placement(transformation(extent={{-16,54},{-28,66}})));
+public
   Modelica.Blocks.Interfaces.RealInput QFlow[nZones] "Heat flow to zones"
     annotation (Placement(transformation(extent={{128,10},{88,50}})));
 equation

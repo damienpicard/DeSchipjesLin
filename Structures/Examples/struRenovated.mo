@@ -2,7 +2,8 @@ within DeSchipjesLin.Structures.Examples;
 model struRenovated
   extends Modelica.Icons.Example;
 
-  StruRenovated stru(linearise=false)
+  replaceable StruRenovated
+                stru(linearise=false)
     annotation (Placement(transformation(extent={{-14,36},{10,60}})));
   Modelica.Blocks.Interfaces.RealOutput TSensor1[6]
     "Sensor temperature of the zones"

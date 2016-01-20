@@ -65,8 +65,8 @@ model partial_structure "Standaard woning de schipjes"
     "Sensor temperature of the zones"
     annotation (Placement(transformation(extent={{96,-70},{116,-50}}),
         iconTransformation(extent={{96,-70},{116,-50}})));
-
   //----------- Zones -------------------------------------------------------
+protected
   IDEAS.Buildings.Linearisation.Components.LinZone woonruimte(
     V=70.1,
     nSurf=10,
