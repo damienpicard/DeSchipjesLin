@@ -81,11 +81,11 @@ you may need to run the following script in order to create the state space mode
 </p>
 <code>
 OutputCPUtime:=false;<br/>
-re=Modelica_LinearSystems2.ModelAnalysis.Linearize(\"DeSchipjesLin.Structures.StruRenovated\");<br/>
-writeMatrix(fileName=\"ssmStruRenovated.mat\",matrixName=\"A\",matrix=re.A);<br/>
-writeMatrix(fileName=\"ssmStruRenovated.mat\",matrixName=\"B\",matrix=re.B, append=true);<br/>
-writeMatrix(fileName=\"ssmStruRenovated.mat\",matrixName=\"C\",matrix=re.C, append=true);<br/>
-writeMatrix(fileName=\"ssmStruRenovated.mat\",matrixName=\"D\",matrix=re.D, append=true);<br/>
+re=Modelica_LinearSystems2.ModelAnalysis.Linearize(\"DeSchipjesLin.Structures.StruRenovatedLight\");<br/>
+writeMatrix(fileName=\"ssmStruRenovatedLight.mat\",matrixName=\"A\",matrix=re.A);<br/>
+writeMatrix(fileName=\"ssmStruRenovatedLight.mat\",matrixName=\"B\",matrix=re.B, append=true);<br/>
+writeMatrix(fileName=\"ssmStruRenovatedLight.mat\",matrixName=\"C\",matrix=re.C, append=true);<br/>
+writeMatrix(fileName=\"ssmStruRenovatedLight.mat\",matrixName=\"D\",matrix=re.D, append=true);<br/>
 OutputCPUtime:=true;</code>
 </html>", revisions="<html>
 <ul>

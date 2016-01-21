@@ -43,10 +43,10 @@ equation
           -18,67},{-18,57.2},{-11.4,57.2}}, color={0,0,127}));
   connect(discomfortAve.y, discomfortAve_int.u)
     annotation (Line(points={{77.5,74},{84.8,74}}, color={0,0,127}));
-  connect(discomfortUp_val.y, discomfortMax.u[1:6]) annotation (Line(points={{
-          4.7,77},{10,77},{10,66.5833},{16,66.5833}}, color={0,0,127}));
-  connect(discomfortLow_val.y, discomfortMax.u[7:12]) annotation (Line(points={
-          {4.7,53},{8,53},{8,54},{10,54},{10,60},{16,60},{16,59.5833}}, color={
+  connect(discomfortUp_val.y, discomfortMax.u[1:6]) annotation (Line(points={{4.7,77},
+          {10,77},{10,66.5833},{16,66.5833}},         color={0,0,127}));
+  connect(discomfortLow_val.y, discomfortMax.u[7:12]) annotation (Line(points={{4.7,53},
+          {8,53},{8,54},{10,54},{10,60},{16,60},{16,59.5833}},          color={
           0,0,127}));
   annotation (Icon(graphics={
         Line(
