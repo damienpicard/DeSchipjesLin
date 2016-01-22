@@ -16,7 +16,7 @@ model partial_preComputed
       linearise=false,
       createOutputs=true,
       nLayWin=3,
-    offsetAzi=leftAng)
+    offsetAzi=frontAng)
      annotation (Placement(transformation(extent={{-90,70},{-70,90}})));
 
    inner IDEAS.Buildings.Linearisation.Interfaces.WindowBus[sim.nWindow] winBusOut(each nLay=

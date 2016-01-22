@@ -3,7 +3,7 @@ model struRenovatedSSM
   extends Modelica.Icons.Example;
   extends IDEAS.Buildings.Linearisation.Interfaces.StateSpaceModelInterface(
       redeclare StateSpace ssm(fileName="ssmStruRenovated.mat"),
-                                        sim(offsetAzi=backAng));
+                                        sim(offsetAzi=frontAng));
 
   final parameter Modelica.SIunits.Angle leftAng=63/180*Modelica.Constants.pi;
   final parameter Modelica.SIunits.Angle rightAng=243/180*Modelica.Constants.pi;
