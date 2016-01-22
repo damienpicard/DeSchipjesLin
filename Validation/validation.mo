@@ -39,9 +39,9 @@ model validation
     tableName="data",
     fileName=
         "C:/Users/u0085306/Documents/work/modelica/DeSchipjesLin/Inputs/PiDControlledOld.txt",
-
     columns={2,3,4,5,6,7})
     annotation (Placement(transformation(extent={{-80,60},{-60,80}})));
+
   Modelica.Blocks.Sources.CombiTimeTable combiTimeTable1(
     offset=zeros(6),
     tableOnFile=true,

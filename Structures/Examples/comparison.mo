@@ -28,8 +28,10 @@ equation
     Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{
             100,100}})),
     experiment(
-      StopTime=3.15e+007,
+      StartTime=2.6e+006,
+      StopTime=3.15e+006,
+      Interval=900,
       __Dymola_fixedstepsize=30,
       __Dymola_Algorithm="Euler"),
-    __Dymola_experimentSetupOutput);
+    __Dymola_experimentSetupOutput(events=false));
 end comparison;
