@@ -27,7 +27,7 @@ equation
   connect(preHeatFlowRad.port, portRad)
     annotation (Line(points={{-60,0},{-100,0},{-100,0}}, color={191,0,0}));
   connect(preHeatFlowCon.port, portCon)
-    annotation (Line(points={{-60,60},{-100,60},{-100,60}}, color={191,0,0}));
+    annotation (Line(points={{-60,60},{-100,60}},           color={191,0,0}));
   for i in 1:nZones loop
   end for;
   connect(gainCon.u, QFlow) annotation (Line(points={{-14.8,60},{-8,60},{0,60},

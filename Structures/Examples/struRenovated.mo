@@ -13,8 +13,8 @@ model struRenovated
   Modelica.Blocks.Interfaces.RealInput QFlow[6] "Heat flow to zones"
     annotation (Placement(transformation(extent={{-120,-20},{-80,20}})));
 equation
-  connect(stru.TSensor, TSensor1) annotation (Line(points={{10.72,40.8},{60,
-          40.8},{60,0},{100,0}}, color={0,0,127}));
+  connect(stru.TSensor, TSensor1) annotation (Line(points={{15.04,38.64},{60,
+          38.64},{60,0},{100,0}},color={0,0,127}));
   connect(prescribedHeat_pid.portCon, stru.heatPortCon) annotation (Line(points=
          {{-60,56},{-42,56},{-42,72},{18,72},{18,50.4},{10,50.4}}, color={191,0,
           0}));

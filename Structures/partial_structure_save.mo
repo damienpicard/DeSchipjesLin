@@ -1,5 +1,5 @@
 within DeSchipjesLin.Structures;
-model partial_structure2 "Standaard woning de schipjes"
+model partial_structure_save "Standaard woning de schipjes"
 
   //Extensions
   extends IDEAS.Buildings.Linearisation.Interfaces.LinearisationInterface(sim(
@@ -49,6 +49,18 @@ model partial_structure2 "Standaard woning de schipjes"
   parameter Modelica.SIunits.Temperature[nZones] T_start = 293.15*ones(nZones)
     "Operative zonal start temperatures";
 
+  Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_a[nZones] heatPortCon
+    "Internal zone nodes for convective heat gains" annotation (Placement(
+        transformation(extent={{90,10},{110,30}}),  iconTransformation(extent={{90,10},
+            {110,30}})));
+  Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_a[nZones] heatPortRad
+    "Internal zones node for radiative heat gains" annotation (Placement(
+        transformation(extent={{90,-30},{110,-10}}),  iconTransformation(extent={{90,-30},
+            {110,-10}})));
+  Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_b[nEmb] heatPortEmb
+    "Construction nodes for heat gains by embedded layers" annotation (
+      Placement(transformation(extent={{90,50},{110,70}}),  iconTransformation(
+          extent={{90,50},{110,70}})));
   Modelica.Blocks.Interfaces.RealOutput[nZones] TSensor( quantity="ThermodynamicTemperature",unit="K",displayUnit="degC", min=0)
     "Sensor temperature of the zones"
     annotation (Placement(transformation(extent={{96,-70},{116,-50}}),
@@ -740,46 +752,51 @@ equation
   connect(woonruimte.TSensor, TSensor[1]) annotation (Line(points={{48.6,46},{
           82,46},{82,-68.3333},{106,-68.3333}},
                                              color={0,0,127}));
-  connect(woonruimte.gainCon, h2sCon1[1].port1) annotation (Line(points={{48,43},
-          {72,43},{72,44},{92,44},{92,20},{120,20}},          color={191,0,0}));
-  connect(woonruimte.gainRad, h2sRad[1].port1) annotation (Line(points={{48,40},
-          {88,40},{88,-20},{120,-20}},          color={191,0,0}));
+  connect(woonruimte.gainCon, heatPortCon[1]) annotation (Line(points={{48,43},
+          {72,43},{72,44},{92,44},{92,11.6667},{100,11.6667}},color={191,0,0}));
+  connect(woonruimte.gainRad, heatPortRad[1]) annotation (Line(points={{48,40},
+          {88,40},{88,-28.3333},{100,-28.3333}},color={191,0,0}));
   connect(keuken.TSensor, TSensor[2]) annotation (Line(points={{48.6,-12},{82,-12},
           {82,-65},{106,-65}},color={0,0,127}));
-  connect(keuken.gainCon, h2sCon1[2].port1) annotation (Line(points={{48,-15},{68,
-          -15},{68,-16},{92,-16},{92,20},{120,20}},
+  connect(keuken.gainCon, heatPortCon[2]) annotation (Line(points={{48,-15},{68,
+          -15},{68,-16},{92,-16},{92,15},{100,15}},
                                              color={191,0,0}));
-  connect(keuken.gainRad, h2sRad[2].port1) annotation (Line(points={{48,-18},{68,
-          -18},{88,-18},{88,-20},{120,-20}},
+  connect(keuken.gainRad, heatPortRad[2]) annotation (Line(points={{48,-18},{68,
+          -18},{88,-18},{88,-25},{100,-25}},
                                        color={191,0,0}));
-  connect(wc.gainCon, h2sCon1[3].port1) annotation (Line(points={{48,-65},{72,-65},
-          {72,-64},{92,-64},{92,20},{120,20}},           color={191,0,0}));
+  connect(wc.gainCon, heatPortCon[3]) annotation (Line(points={{48,-65},{72,-65},
+          {72,-64},{92,-64},{92,18.3333},{100,18.3333}}, color={191,0,0}));
   connect(wc.TSensor, TSensor[3]) annotation (Line(points={{48.6,-62},{82,-62},
           {82,-61.6667},{106,-61.6667}},color={0,0,127}));
-  connect(wc.gainRad, h2sRad[3].port1) annotation (Line(points={{48,-68},{70,-68},
-          {88,-68},{88,-20},{120,-20}},           color={191,0,0}));
+  connect(wc.gainRad, heatPortRad[3]) annotation (Line(points={{48,-68},{70,-68},
+          {88,-68},{88,-21.6667},{100,-21.6667}}, color={191,0,0}));
   connect(slaapkamer.TSensor, TSensor[4]) annotation (Line(points={{48.6,-110},
           {82,-110},{82,-58.3333},{106,-58.3333}},
                                               color={0,0,127}));
-  connect(slaapkamer.gainCon, h2sCon1[4].port1) annotation (Line(points={{48,-113},
-          {70,-113},{70,-112},{88,-112},{88,20},{120,20}},           color={191,
+  connect(slaapkamer.gainCon, heatPortCon[4]) annotation (Line(points={{48,-113},
+          {70,-113},{70,-112},{88,-112},{88,21.6667},{100,21.6667}}, color={191,
           0,0}));
-  connect(slaapkamer.gainRad, h2sRad[4].port1) annotation (Line(points={{48,-116},
-          {70,-116},{88,-116},{88,-20},{120,-20}},           color={191,0,0}));
+  connect(slaapkamer.gainRad, heatPortRad[4]) annotation (Line(points={{48,-116},
+          {70,-116},{88,-116},{88,-18.3333},{100,-18.3333}}, color={191,0,0}));
   connect(badkamer.TSensor, TSensor[5]) annotation (Line(points={{50.6,-164},{82,
           -164},{82,-55},{106,-55}}, color={0,0,127}));
-  connect(badkamer.gainCon, h2sCon1[5].port1) annotation (Line(points={{50,-167},
-          {88,-167},{88,20},{120,20}},color={191,0,0}));
-  connect(badkamer.gainRad, h2sRad[5].port1) annotation (Line(points={{50,-170},
-          {92,-170},{92,-20},{120,-20}},color={191,0,0}));
+  connect(badkamer.gainCon, heatPortCon[5]) annotation (Line(points={{50,-167},{
+          88,-167},{88,25},{100,25}}, color={191,0,0}));
+  connect(badkamer.gainRad, heatPortRad[5]) annotation (Line(points={{50,-170},{
+          92,-170},{92,-15},{100,-15}}, color={191,0,0}));
   connect(nachthal.TSensor, TSensor[6]) annotation (Line(points={{52.6,-214},{
           82,-214},{82,-51.6667},{106,-51.6667}},
                                                color={0,0,127}));
-  connect(nachthal.gainCon, h2sCon1[6].port1) annotation (Line(points={{52,-217},
-          {68,-217},{68,-218},{88,-218},{88,18},{88,18},{88,20},{120,20}},
+  connect(nachthal.gainCon, heatPortCon[6]) annotation (Line(points={{52,-217},
+          {68,-217},{68,-218},{88,-218},{88,18},{88,18},{88,28.3333},{100,
+          28.3333}},
         color={191,0,0}));
-  connect(nachthal.gainRad, h2sRad[6].port1) annotation (Line(points={{52,-220},
-          {76,-220},{92,-220},{92,-20},{120,-20}},          color={191,0,0}));
+  connect(nachthal.gainRad, heatPortRad[6]) annotation (Line(points={{52,-220},
+          {76,-220},{92,-220},{92,-11.6667},{100,-11.6667}},color={191,0,0}));
+  connect(h2sRad.port1, heatPortRad)
+    annotation (Line(points={{120,-20},{100,-20}},           color={191,0,0}));
+  connect(h2sCon1.port1, heatPortCon)
+    annotation (Line(points={{120,20},{100,20}},          color={191,0,0}));
   connect(h2sRad.Q_flow,QFlowRad)  annotation (Line(points={{140.8,-13},{146.4,-13},
           {146.4,-12},{172,-12}}, color={0,0,127}));
   connect(QFlowCon, h2sCon1.Q_flow) annotation (Line(points={{172,26},{140.8,26},
@@ -891,4 +908,4 @@ First implementation
 </html>"),
     experiment(StopTime=1e+006),
     __Dymola_experimentSetupOutput);
-end partial_structure2;
+end partial_structure_save;

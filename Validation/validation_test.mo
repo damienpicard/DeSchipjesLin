@@ -3,7 +3,8 @@ model validation_test
   extends Modelica.Icons.Example;
 
   Structures.Examples.comparison old(structureH1(redeclare Structures.StruOld
-        stru), structureHSSM1(
+        stru(sim(linExtCon=true, linExtRad=true))),
+               structureHSSM1(
       ssm(fileName="ssmStruOld.mat"),
       woonruimteWindow(
         frac=0.12,
@@ -37,7 +38,7 @@ model validation_test
 
     columns={2,3,4,5,6,7})
     annotation (Placement(transformation(extent={{-80,60},{-60,80}})));
-  Modelica.Blocks.Math.Gain gain[6](k={0,1,0,0,0,0})
+  Modelica.Blocks.Math.Gain gain[6](k={0,0,0,0,0,0})
     annotation (Placement(transformation(extent={{-46,64},{-34,76}})));
 equation
   connect(combiTimeTable.y, gain.u)

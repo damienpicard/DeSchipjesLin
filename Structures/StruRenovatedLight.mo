@@ -94,5 +94,6 @@ August, 2015 by Damien Picard:<br/>
 First implementation
 </li>
 </ul>
-</html>"));
+</html>"), Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-200,
+            -260},{140,100}})));
 end StruRenovatedLight;
