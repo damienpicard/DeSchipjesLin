@@ -13,5 +13,11 @@ model preComputedReno
     slaapkamerRaam(redeclare final Structures.Data.Glass.DubbelGlas      glazing,
         redeclare final Structures.Data.Frames.LoofHout                                 fraType));
   annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,
-            -100},{100,100}})));
+            -100},{100,100}})),
+    experiment(
+      StopTime=3.17e+007,
+      Interval=900,
+      __Dymola_fixedstepsize=15,
+      __Dymola_Algorithm="Euler"),
+    __Dymola_experimentSetupOutput(events=false));
 end preComputedReno;
